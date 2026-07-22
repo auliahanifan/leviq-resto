@@ -1,4 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
+import { AddTableForm } from "@/components/AddTableForm";
+import { DeleteTableButton } from "@/components/DeleteTableButton";
 
 export default async function HomePage() {
   const supabase = await createClient();
@@ -10,6 +12,7 @@ export default async function HomePage() {
   return (
     <div className="flex flex-1 flex-col gap-6 px-6 py-8">
       <h1 className="text-2xl font-bold">Daftar Meja</h1>
+      <AddTableForm />
       {!tables || tables.length === 0 ? (
         <p className="text-lg text-zinc-500">
           Belum ada meja. Tambahkan meja baru untuk mulai.
@@ -40,6 +43,7 @@ export default async function HomePage() {
                 >
                   {isTerisi ? "Terisi" : "Kosong"}
                 </span>
+                {!isTerisi && <DeleteTableButton id={table.id} nama={table.nama} />}
               </div>
             );
           })}
