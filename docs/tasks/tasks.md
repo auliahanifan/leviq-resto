@@ -30,10 +30,10 @@ Setiap task punya referensi FR (Functional Requirement) dari PRD bila relevan. U
 
 ## Fase 2 — Autentikasi PIN (FR1.1–FR1.2)
 
-- [ ] 2.1 Halaman login dengan input PIN 4 digit (numeric keypad besar untuk tablet)
+- [x] 2.1 Halaman login dengan input PIN 4 digit (numeric keypad besar untuk tablet)
 - [x] 2.2 Logic validasi PIN terhadap `settings` (FR1.1: satu PIN untuk semua akses)
-- [ ] 2.3 Tampilkan pesan error saat PIN salah, tanpa limit percobaan (FR1.2)
-- [ ] 2.4 Session/local auth state setelah login berhasil (redirect ke daftar meja)
+- [x] 2.3 Tampilkan pesan error saat PIN salah, tanpa limit percobaan (FR1.2)
+- [x] 2.4 Session/local auth state setelah login berhasil (redirect ke daftar meja)
 - [ ] 2.5 Halaman/opsi untuk mengubah PIN (agar tidak hard-coded selamanya)
 - [ ] 2.6 Verifikasi: login sukses dengan PIN benar, gagal dengan PIN salah, session bertahan saat refresh
 
