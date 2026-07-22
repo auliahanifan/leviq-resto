@@ -23,7 +23,7 @@ Setiap task punya referensi FR (Functional Requirement) dari PRD bila relevan. U
 - [x] 1.2 Tabel `tables` (meja): id, nama/nomor, status (`kosong` | `terisi`)
 - [x] 1.3 Tabel `menu_items`: id, nama, harga, kategori (opsional), is_active/deleted
 - [x] 1.4 Tabel `orders`: id, table_id, status (`draft`/keranjang, `confirmed`, `paid`, `cancelled`), total, created_at, paid_at, payment_method
-- [ ] 1.5 Tabel `order_items`: id, order_id, menu_item_id, nama & harga snapshot (agar histori tidak berubah jika harga menu diedit belakangan), qty, subtotal
+- [x] 1.5 Tabel `order_items`: id, order_id, menu_item_id, nama & harga snapshot (agar histori tidak berubah jika harga menu diedit belakangan), qty, subtotal
 - [ ] 1.6 Tabel `cash_closings` (tutup kasir): id, periode_mulai, periode_selesai, total_tunai, total_kartu, uang_fisik, selisih, created_at
 - [ ] 1.7 Review relasi & constraint dasar (foreign key, enum status)
 - [ ] 1.8 Verifikasi: migrasi berjalan tanpa error di Supabase, seed data dummy untuk testing
