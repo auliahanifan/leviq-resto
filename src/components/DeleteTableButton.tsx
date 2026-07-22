@@ -3,15 +3,20 @@
 import { useState, useTransition } from "react";
 import { deleteTableAction } from "@/lib/table-actions";
 
-export function DeleteTableButton({ id, nama }: { id: string; nama: string }) {
+export function DeleteTableButton({ id }: { id: string }) {
+  const [confirming, setConfirming] = useState(false);
   const [error, setError] = useState<string>();
   const [pending, startTransition] = useTransition();
 
-  function handleDelete() {
-    if (!confirm(`Hapus meja "${nama}"?`)) return;
+  function handleClick() {
+    if (!confirming) {
+      setConfirming(true);
+      return;
+    }
     startTransition(async () => {
       const result = await deleteTableAction(id);
       setError(result?.error);
+      if (!result?.error) setConfirming(false);
     });
   }
 
@@ -19,11 +24,11 @@ export function DeleteTableButton({ id, nama }: { id: string; nama: string }) {
     <div className="flex flex-col items-center gap-1">
       <button
         type="button"
-        onClick={handleDelete}
+        onClick={handleClick}
         disabled={pending}
         className="min-h-12 rounded-lg border border-red-300 px-4 text-base font-medium text-red-600 active:opacity-80 disabled:opacity-40 dark:border-red-800"
       >
-        {pending ? "Menghapus..." : "Hapus"}
+        {pending ? "Menghapus..." : confirming ? "Yakin?" : "Hapus"}
       </button>
       {error && (
         <p role="alert" className="text-sm font-medium text-red-600">

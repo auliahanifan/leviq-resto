@@ -43,7 +43,7 @@ export default async function HomePage() {
                 >
                   {isTerisi ? "Terisi" : "Kosong"}
                 </span>
-                {!isTerisi && <DeleteTableButton id={table.id} nama={table.nama} />}
+                {!isTerisi && <DeleteTableButton id={table.id} />}
               </div>
             );
           })}
