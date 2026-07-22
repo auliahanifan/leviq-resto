@@ -34,8 +34,8 @@ Setiap task punya referensi FR (Functional Requirement) dari PRD bila relevan. U
 - [x] 2.2 Logic validasi PIN terhadap `settings` (FR1.1: satu PIN untuk semua akses)
 - [x] 2.3 Tampilkan pesan error saat PIN salah, tanpa limit percobaan (FR1.2)
 - [x] 2.4 Session/local auth state setelah login berhasil (redirect ke daftar meja)
-- [ ] 2.5 Halaman/opsi untuk mengubah PIN (agar tidak hard-coded selamanya)
-- [ ] 2.6 Verifikasi: login sukses dengan PIN benar, gagal dengan PIN salah, session bertahan saat refresh
+- [x] 2.5 Halaman/opsi untuk mengubah PIN (agar tidak hard-coded selamanya)
+- [x] 2.6 Verifikasi: login sukses dengan PIN benar, gagal dengan PIN salah, session bertahan saat refresh
 
 ## Fase 3 — Manajemen Menu (FR2.1–FR2.4)
 
