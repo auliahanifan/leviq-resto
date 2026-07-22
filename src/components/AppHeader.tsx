@@ -9,6 +9,12 @@ export function AppHeader() {
       </Link>
       <nav className="flex items-center gap-6">
         <Link
+          href="/menu"
+          className="text-base font-medium underline-offset-4 hover:underline"
+        >
+          Kelola Menu
+        </Link>
+        <Link
           href="/ubah-pin"
           className="text-base font-medium underline-offset-4 hover:underline"
         >
