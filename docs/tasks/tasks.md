@@ -44,26 +44,26 @@ Setiap task punya referensi FR (Functional Requirement) dari PRD bila relevan. U
 - [x] 3.3 Form edit item menu (nama/harga/kategori) — FR2.2
 - [x] 3.4 Aksi hapus item menu (dengan konfirmasi) — FR2.3
 - [x] 3.5 Pastikan harga tetap tanpa varian, tidak ada field ukuran/topping (FR2.4)
-- [ ] 3.6 Verifikasi: CRUD menu berfungsi, validasi field wajib, hapus tidak merusak order lama (pakai snapshot dari 1.5)
+- [x] 3.6 Verifikasi: CRUD menu berfungsi, validasi field wajib, hapus tidak merusak order lama (pakai snapshot dari 1.5)
 
 ## Fase 4 — Manajemen Meja (FR3.1–FR3.2)
 
 - [x] 4.1 Halaman utama: grid/daftar meja dengan status visual (Kosong/Terisi) — FR3.1
 - [x] 4.2 Pengaturan meja: tambah/hapus meja secara bebas (bukan hard-coded, sesuai asumsi 8.2)
-- [ ] 4.3 Logic auto-update status meja mengikuti siklus order (FR3.2)
+- [x] 4.3 Logic auto-update status meja mengikuti siklus order (FR3.2)
 - [ ] 4.4 Verifikasi: tambah/hapus meja tercermin di halaman utama, status berubah otomatis saat order dibuat/lunas
 
 ## Fase 5 — Order per Meja (FR4.1–FR4.5)
 
-- [ ] 5.1 Tap meja kosong → buka halaman keranjang order untuk meja tsb (FR4.1: hanya meja kosong)
-- [ ] 5.2 Tambah item ke keranjang dari daftar menu (dengan kategori/filter jika perlu)
-- [ ] 5.3 Ubah qty / hapus item selama masih di tahap keranjang (FR4.2)
-- [ ] 5.4 Hitung total otomatis (harga × qty, tanpa pajak/diskon) — FR4.4
-- [ ] 5.5 Tombol "Buat Order" → order berubah status `confirmed`, item terkunci (tidak bisa edit parsial) — FR4.3
-- [ ] 5.6 Setelah order dibuat, status meja otomatis jadi "Terisi"
-- [ ] 5.7 Tap meja terisi → tampilkan ringkasan order & total (view read-only untuk item)
-- [ ] 5.8 Tombol "Batalkan Order" pada order yang belum dibayar → status `cancelled`, meja kembali "Kosong", tidak dihitung sebagai penjualan (FR4.5)
-- [ ] 5.9 Verifikasi: alur pilih meja → tambah/kurang item → buat order → item terkunci; batalkan order mengembalikan meja ke kosong dan tidak muncul di rekap penjualan
+- [x] 5.1 Tap meja kosong → buka halaman keranjang order untuk meja tsb (FR4.1: hanya meja kosong)
+- [x] 5.2 Tambah item ke keranjang dari daftar menu (dengan kategori/filter jika perlu)
+- [x] 5.3 Ubah qty / hapus item selama masih di tahap keranjang (FR4.2)
+- [x] 5.4 Hitung total otomatis (harga × qty, tanpa pajak/diskon) — FR4.4
+- [x] 5.5 Tombol "Buat Order" → order berubah status `confirmed`, item terkunci (tidak bisa edit parsial) — FR4.3
+- [x] 5.6 Setelah order dibuat, status meja otomatis jadi "Terisi"
+- [x] 5.7 Tap meja terisi → tampilkan ringkasan order & total (view read-only untuk item)
+- [x] 5.8 Tombol "Batalkan Order" pada order yang belum dibayar → status `cancelled`, meja kembali "Kosong", tidak dihitung sebagai penjualan (FR4.5)
+- [x] 5.9 Verifikasi: alur pilih meja → tambah/kurang item → buat order → item terkunci; batalkan order mengembalikan meja ke kosong dan tidak muncul di rekap penjualan
 
 ## Fase 6 — Pembayaran (FR5.1–FR5.4)
 

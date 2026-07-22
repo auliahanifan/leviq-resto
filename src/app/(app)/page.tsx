@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { AddTableForm } from "@/components/AddTableForm";
 import { DeleteTableButton } from "@/components/DeleteTableButton";
@@ -20,9 +21,6 @@ export default async function HomePage() {
       ) : (
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
           {tables.map((table) => {
-            // Status berasal langsung dari tables.status. Fase 5 (buat order/
-            // bayar) yang bertanggung jawab mengubah nilai ini antara
-            // 'kosong' dan 'terisi' saat siklus order berjalan.
             const isTerisi = table.status === "terisi";
             return (
               <div
@@ -33,16 +31,21 @@ export default async function HomePage() {
                     : "border-green-300 bg-green-50 dark:border-green-800 dark:bg-green-950"
                 }`}
               >
-                <span className="text-xl font-bold">{table.nama}</span>
-                <span
-                  className={`rounded-full px-3 py-1 text-sm font-semibold ${
-                    isTerisi
-                      ? "bg-orange-200 text-orange-900 dark:bg-orange-900 dark:text-orange-200"
-                      : "bg-green-200 text-green-900 dark:bg-green-900 dark:text-green-200"
-                  }`}
+                <Link
+                  href={`/meja/${table.id}`}
+                  className="flex flex-col items-center gap-3"
                 >
-                  {isTerisi ? "Terisi" : "Kosong"}
-                </span>
+                  <span className="text-xl font-bold">{table.nama}</span>
+                  <span
+                    className={`rounded-full px-3 py-1 text-sm font-semibold ${
+                      isTerisi
+                        ? "bg-orange-200 text-orange-900 dark:bg-orange-900 dark:text-orange-200"
+                        : "bg-green-200 text-green-900 dark:bg-green-900 dark:text-green-200"
+                    }`}
+                  >
+                    {isTerisi ? "Terisi" : "Kosong"}
+                  </span>
+                </Link>
                 {!isTerisi && <DeleteTableButton id={table.id} />}
               </div>
             );
