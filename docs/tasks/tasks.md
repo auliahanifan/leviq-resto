@@ -51,7 +51,7 @@ Setiap task punya referensi FR (Functional Requirement) dari PRD bila relevan. U
 - [x] 4.1 Halaman utama: grid/daftar meja dengan status visual (Kosong/Terisi) — FR3.1
 - [x] 4.2 Pengaturan meja: tambah/hapus meja secara bebas (bukan hard-coded, sesuai asumsi 8.2)
 - [x] 4.3 Logic auto-update status meja mengikuti siklus order (FR3.2)
-- [ ] 4.4 Verifikasi: tambah/hapus meja tercermin di halaman utama, status berubah otomatis saat order dibuat/lunas
+- [x] 4.4 Verifikasi: tambah/hapus meja tercermin di halaman utama, status berubah otomatis saat order dibuat/lunas
 
 ## Fase 5 — Order per Meja (FR4.1–FR4.5)
 
@@ -67,12 +67,12 @@ Setiap task punya referensi FR (Functional Requirement) dari PRD bila relevan. U
 
 ## Fase 6 — Pembayaran (FR5.1–FR5.4)
 
-- [ ] 6.1 Dari ringkasan order (meja terisi), tombol pilih metode bayar: Tunai / Kartu (FR5.1)
-- [ ] 6.2 Alur Tunai: input jumlah uang diterima → hitung & tampilkan kembalian otomatis, validasi jumlah ≥ total (FR5.2)
-- [ ] 6.3 Alur Kartu: konfirmasi langsung sebagai lunas tanpa integrasi EDC (FR5.3)
-- [ ] 6.4 Setelah konfirmasi bayar: order jadi `paid`, meja kembali "Kosong", order tidak bisa dibuka/diubah lagi kecuali dilihat sebagai riwayat (FR5.4)
-- [ ] 6.5 Tampilan struk digital ringkas di layar (bukan cetak fisik, sesuai out-of-scope)
-- [ ] 6.6 Verifikasi: pembayaran tunai dengan input kurang dari total ditolak, kembalian terhitung benar; pembayaran kartu langsung lunas; meja balik kosong di kedua kasus
+- [x] 6.1 Dari ringkasan order (meja terisi), tombol pilih metode bayar: Tunai / Kartu (FR5.1)
+- [x] 6.2 Alur Tunai: input jumlah uang diterima → hitung & tampilkan kembalian otomatis, validasi jumlah ≥ total (FR5.2)
+- [x] 6.3 Alur Kartu: konfirmasi langsung sebagai lunas tanpa integrasi EDC (FR5.3)
+- [x] 6.4 Setelah konfirmasi bayar: order jadi `paid`, meja kembali "Kosong", order tidak bisa dibuka/diubah lagi kecuali dilihat sebagai riwayat (FR5.4)
+- [x] 6.5 Tampilan struk digital ringkas di layar (bukan cetak fisik, sesuai out-of-scope)
+- [x] 6.6 Verifikasi: pembayaran tunai dengan input kurang dari total ditolak, kembalian terhitung benar; pembayaran kartu langsung lunas; meja balik kosong di kedua kasus
 
 ## Fase 7 — Tutup Kasir (FR6.1–FR6.4)
 

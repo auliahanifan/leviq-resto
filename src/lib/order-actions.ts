@@ -238,3 +238,61 @@ export async function cancelOrderAction(tableId: string): Promise<ActionResult> 
   revalidatePath("/");
   redirect("/");
 }
+
+export type PaymentMethod = "tunai" | "kartu";
+export type PayOrderResult =
+  | { error: string }
+  | { success: true; total: number; paymentMethod: PaymentMethod; change: number };
+
+export async function payOrderAction(
+  tableId: string,
+  paymentMethod: PaymentMethod,
+  amountReceived?: number
+): Promise<PayOrderResult> {
+  const supabase = await createClient();
+
+  const { data: order } = await supabase
+    .from("orders")
+    .select("id, total")
+    .eq("table_id", tableId)
+    .eq("status", "confirmed")
+    .maybeSingle();
+
+  if (!order) {
+    return { error: "Order aktif tidak ditemukan." };
+  }
+
+  if (paymentMethod === "tunai" && (amountReceived == null || amountReceived < order.total)) {
+    return { error: "Jumlah uang diterima kurang dari total." };
+  }
+
+  const { error: updateError } = await supabase
+    .from("orders")
+    .update({
+      status: "paid",
+      payment_method: paymentMethod,
+      paid_at: new Date().toISOString(),
+    })
+    .eq("id", order.id)
+    .eq("status", "confirmed");
+
+  if (updateError) {
+    return { error: "Gagal memproses pembayaran." };
+  }
+
+  await supabase.from("tables").update({ status: "kosong" }).eq("id", tableId);
+
+  // Sengaja tidak memanggil revalidatePath di sini: itu akan memicu
+  // re-render halaman /meja/[id]/bayar saat ini pada respons yang sama,
+  // yang langsung kena redirect guard (tabel sudah "kosong") sebelum
+  // struk digital sempat tampil. Halaman "/" tetap dinamis (bergantung
+  // pada cookies), jadi statusnya otomatis segar begitu kasir menekan
+  // "Selesai" untuk kembali ke sana.
+
+  return {
+    success: true,
+    total: order.total,
+    paymentMethod,
+    change: paymentMethod === "tunai" ? amountReceived! - order.total : 0,
+  };
+}
