@@ -39,11 +39,11 @@ Setiap task punya referensi FR (Functional Requirement) dari PRD bila relevan. U
 
 ## Fase 3 — Manajemen Menu (FR2.1–FR2.4)
 
-- [ ] 3.1 Halaman "Kelola Menu": list semua item menu
-- [ ] 3.2 Form tambah item baru (nama wajib, harga wajib, kategori opsional) — FR2.1
-- [ ] 3.3 Form edit item menu (nama/harga/kategori) — FR2.2
-- [ ] 3.4 Aksi hapus item menu (dengan konfirmasi) — FR2.3
-- [ ] 3.5 Pastikan harga tetap tanpa varian, tidak ada field ukuran/topping (FR2.4)
+- [x] 3.1 Halaman "Kelola Menu": list semua item menu
+- [x] 3.2 Form tambah item baru (nama wajib, harga wajib, kategori opsional) — FR2.1
+- [x] 3.3 Form edit item menu (nama/harga/kategori) — FR2.2
+- [x] 3.4 Aksi hapus item menu (dengan konfirmasi) — FR2.3
+- [x] 3.5 Pastikan harga tetap tanpa varian, tidak ada field ukuran/topping (FR2.4)
 - [ ] 3.6 Verifikasi: CRUD menu berfungsi, validasi field wajib, hapus tidak merusak order lama (pakai snapshot dari 1.5)
 
 ## Fase 4 — Manajemen Meja (FR3.1–FR3.2)
