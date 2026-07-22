@@ -10,12 +10,12 @@ Setiap task punya referensi FR (Functional Requirement) dari PRD bila relevan. U
 
 ## Fase 0 — Setup Project
 
-- [ ] 0.1 Inisialisasi project Next.js (TypeScript, App Router)
-- [ ] 0.2 Setup Supabase project (buat project, catat URL & anon key)
-- [ ] 0.3 Setup koneksi Supabase client di Next.js (env vars, client helper)
-- [ ] 0.4 Setup styling/UI kit dioptimalkan untuk tablet (touch target besar) — pilih Tailwind/komponen dasar
-- [ ] 0.5 Setup deployment pipeline (misal Vercel) tersambung ke repo, auto-deploy dari branch main
-- [ ] 0.6 Konfigurasi dasar: bahasa Indonesia, format mata uang Rupiah tanpa desimal (util formatter)
+- [x] 0.1 Inisialisasi project Next.js (TypeScript, App Router)
+- [x] 0.2 Setup Supabase project (buat project, catat URL & anon key)
+- [x] 0.3 Setup koneksi Supabase client di Next.js (env vars, client helper)
+- [x] 0.4 Setup styling/UI kit dioptimalkan untuk tablet (touch target besar) — pilih Tailwind/komponen dasar
+- [x] 0.5 Setup deployment pipeline (misal Vercel) tersambung ke repo, auto-deploy dari branch main
+- [x] 0.6 Konfigurasi dasar: bahasa Indonesia, format mata uang Rupiah tanpa desimal (util formatter)
 
 ## Fase 1 — Skema Data (Database)
 
