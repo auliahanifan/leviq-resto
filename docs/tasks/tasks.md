@@ -76,12 +76,12 @@ Setiap task punya referensi FR (Functional Requirement) dari PRD bila relevan. U
 
 ## Fase 7 — Tutup Kasir (FR6.1–FR6.4)
 
-- [ ] 7.1 Halaman "Tutup Kasir": hitung total tunai & kartu sejak tutup kasir terakhir (FR6.1)
-- [ ] 7.2 Input jumlah uang fisik di laci (FR6.2)
-- [ ] 7.3 Hitung & tampilkan selisih (uang fisik − total tunai tercatat) (FR6.3)
-- [ ] 7.4 Simpan sesi tutup kasir sebagai riwayat: tanggal/waktu, total tunai, total kartu, uang fisik, selisih (FR6.4)
-- [ ] 7.5 Halaman riwayat tutup kasir (list sesi-sesi sebelumnya)
-- [ ] 7.6 Verifikasi: total tunai/kartu di periode berjalan akurat dibanding order yang lunas; sesi baru hanya menghitung transaksi setelah tutup kasir terakhir
+- [x] 7.1 Halaman "Tutup Kasir": hitung total tunai & kartu sejak tutup kasir terakhir (FR6.1)
+- [x] 7.2 Input jumlah uang fisik di laci (FR6.2)
+- [x] 7.3 Hitung & tampilkan selisih (uang fisik − total tunai tercatat) (FR6.3)
+- [x] 7.4 Simpan sesi tutup kasir sebagai riwayat: tanggal/waktu, total tunai, total kartu, uang fisik, selisih (FR6.4)
+- [x] 7.5 Halaman riwayat tutup kasir (list sesi-sesi sebelumnya)
+- [x] 7.6 Verifikasi: total tunai/kartu di periode berjalan akurat dibanding order yang lunas; sesi baru hanya menghitung transaksi setelah tutup kasir terakhir
 
 ## Fase 8 — Non-Functional & Polish
 
