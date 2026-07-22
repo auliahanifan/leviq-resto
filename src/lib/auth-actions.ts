@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { createSession, deleteSession } from "@/lib/session";
+import { createSession, deleteSession, requireSession } from "@/lib/session";
 
 export type LoginState = { error?: string } | undefined;
 
@@ -38,6 +38,8 @@ export async function changePinAction(
   _prevState: ChangePinState,
   formData: FormData
 ): Promise<ChangePinState> {
+  await requireSession();
+
   const oldPin = String(formData.get("old_pin") ?? "");
   const newPin = String(formData.get("new_pin") ?? "");
   const confirmPin = String(formData.get("confirm_pin") ?? "");

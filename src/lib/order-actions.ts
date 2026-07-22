@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { requireSession } from "@/lib/session";
 
 type SupabaseServerClient = Awaited<ReturnType<typeof createClient>>;
 type ActionResult = { error?: string } | undefined;
@@ -44,6 +45,8 @@ export async function addItemToCartAction(
   tableId: string,
   menuItemId: string
 ): Promise<ActionResult> {
+  await requireSession();
+
   const supabase = await createClient();
 
   const { data: table } = await supabase
@@ -103,6 +106,8 @@ export async function incrementCartItemAction(
   orderItemId: string,
   tableId: string
 ): Promise<ActionResult> {
+  await requireSession();
+
   const supabase = await createClient();
 
   const { data: item } = await supabase
@@ -127,6 +132,8 @@ export async function decrementCartItemAction(
   orderItemId: string,
   tableId: string
 ): Promise<ActionResult> {
+  await requireSession();
+
   const supabase = await createClient();
 
   const { data: item } = await supabase
@@ -155,6 +162,8 @@ export async function removeCartItemAction(
   orderItemId: string,
   tableId: string
 ): Promise<ActionResult> {
+  await requireSession();
+
   const supabase = await createClient();
 
   const { data: item } = await supabase
@@ -171,6 +180,8 @@ export async function removeCartItemAction(
 }
 
 export async function confirmOrderAction(tableId: string): Promise<ActionResult> {
+  await requireSession();
+
   const supabase = await createClient();
 
   const { data: order } = await supabase
@@ -210,6 +221,8 @@ export async function confirmOrderAction(tableId: string): Promise<ActionResult>
 }
 
 export async function cancelOrderAction(tableId: string): Promise<ActionResult> {
+  await requireSession();
+
   const supabase = await createClient();
 
   const { data: order } = await supabase
@@ -249,6 +262,8 @@ export async function payOrderAction(
   paymentMethod: PaymentMethod,
   amountReceived?: number
 ): Promise<PayOrderResult> {
+  await requireSession();
+
   const supabase = await createClient();
 
   const { data: order } = await supabase

@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import {
   SESSION_COOKIE_NAME,
   SESSION_MAX_AGE_SECONDS,
@@ -25,4 +26,17 @@ export async function deleteSession(): Promise<void> {
 export async function hasActiveSession(): Promise<boolean> {
   const cookieStore = await cookies();
   return isSessionTokenValid(cookieStore.get(SESSION_COOKIE_NAME)?.value);
+}
+
+/**
+ * Defense-in-depth for Server Actions: proxy.ts already gates every page
+ * except /login, but Server Actions are POST requests to their own page
+ * route, so their protection depends on that matcher staying correct.
+ * Call this at the top of every mutating action so a future matcher
+ * change can't silently open one up.
+ */
+export async function requireSession(): Promise<void> {
+  if (!(await hasActiveSession())) {
+    redirect("/login");
+  }
 }

@@ -92,7 +92,7 @@ export function OrderCart({
                     type="button"
                     disabled={pending}
                     onClick={() => run(() => decrementCartItemAction(item.id, table.id))}
-                    className="min-h-10 min-w-10 rounded-lg bg-zinc-200 text-lg font-bold disabled:opacity-40 dark:bg-zinc-800"
+                    className="min-h-12 min-w-12 rounded-lg bg-zinc-200 text-lg font-bold disabled:opacity-40 dark:bg-zinc-800"
                   >
                     −
                   </button>
@@ -101,7 +101,7 @@ export function OrderCart({
                     type="button"
                     disabled={pending}
                     onClick={() => run(() => incrementCartItemAction(item.id, table.id))}
-                    className="min-h-10 min-w-10 rounded-lg bg-zinc-200 text-lg font-bold disabled:opacity-40 dark:bg-zinc-800"
+                    className="min-h-12 min-w-12 rounded-lg bg-zinc-200 text-lg font-bold disabled:opacity-40 dark:bg-zinc-800"
                   >
                     +
                   </button>
@@ -109,7 +109,7 @@ export function OrderCart({
                     type="button"
                     disabled={pending}
                     onClick={() => run(() => removeCartItemAction(item.id, table.id))}
-                    className="min-h-10 rounded-lg px-2 text-sm font-medium text-red-600 disabled:opacity-40"
+                    className="min-h-12 rounded-lg px-3 text-sm font-medium text-red-600 disabled:opacity-40"
                   >
                     Hapus
                   </button>

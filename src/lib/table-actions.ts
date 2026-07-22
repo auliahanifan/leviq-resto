@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { requireSession } from "@/lib/session";
 
 export type AddTableState = { error?: string; success?: boolean } | undefined;
 
@@ -9,6 +10,8 @@ export async function addTableAction(
   _prevState: AddTableState,
   formData: FormData
 ): Promise<AddTableState> {
+  await requireSession();
+
   const nama = String(formData.get("nama") ?? "").trim();
 
   if (!nama) {
@@ -29,6 +32,8 @@ export async function addTableAction(
 export type DeleteTableState = { error?: string } | undefined;
 
 export async function deleteTableAction(id: string): Promise<DeleteTableState> {
+  await requireSession();
+
   const supabase = await createClient();
   const { error } = await supabase.from("tables").delete().eq("id", id);
 

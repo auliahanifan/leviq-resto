@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { requireSession } from "@/lib/session";
 
 export type MenuFormState = { error?: string; success?: boolean } | undefined;
 
@@ -16,6 +17,8 @@ export async function createMenuItemAction(
   _prevState: MenuFormState,
   formData: FormData
 ): Promise<MenuFormState> {
+  await requireSession();
+
   const nama = String(formData.get("nama") ?? "").trim();
   const harga = parseHarga(formData.get("harga"));
   const kategori = String(formData.get("kategori") ?? "").trim() || null;
@@ -42,6 +45,8 @@ export async function updateMenuItemAction(
   _prevState: MenuFormState,
   formData: FormData
 ): Promise<MenuFormState> {
+  await requireSession();
+
   const id = String(formData.get("id") ?? "");
   const nama = String(formData.get("nama") ?? "").trim();
   const harga = parseHarga(formData.get("harga"));
@@ -72,6 +77,8 @@ export async function updateMenuItemAction(
 }
 
 export async function deleteMenuItemAction(id: string): Promise<void> {
+  await requireSession();
+
   const supabase = await createClient();
   await supabase.from("menu_items").update({ is_active: false }).eq("id", id);
   revalidatePath("/menu");

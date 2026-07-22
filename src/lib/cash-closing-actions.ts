@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { getPendingCashSummary } from "@/lib/cash-closing";
+import { requireSession } from "@/lib/session";
 
 export type CreateCashClosingState = { error?: string } | undefined;
 
@@ -10,6 +11,8 @@ export async function createCashClosingAction(
   _prevState: CreateCashClosingState,
   formData: FormData
 ): Promise<CreateCashClosingState> {
+  await requireSession();
+
   const uangFisikRaw = formData.get("uang_fisik");
   const uangFisik = Number(uangFisikRaw);
 

@@ -85,11 +85,11 @@ Setiap task punya referensi FR (Functional Requirement) dari PRD bila relevan. U
 
 ## Fase 8 — Non-Functional & Polish
 
-- [ ] 8.1 Optimasi UI untuk tablet: tombol/target besar, minim ketikan manual (angka besar untuk PIN & pembayaran)
-- [ ] 8.2 Pastikan semua teks berbahasa Indonesia dan format Rupiah konsisten (tanpa desimal)
-- [ ] 8.3 Uji alur "pilih meja → order → bayar" agar terasa cepat (minim langkah, minim loading blocking)
-- [ ] 8.4 Penanganan error dasar (koneksi terputus sementara, karena diasumsikan WiFi stabil tanpa mode offline)
-- [ ] 8.5 Review keamanan dasar: PIN tidak tersimpan plain text, akses halaman dilindungi session login
+- [x] 8.1 Optimasi UI untuk tablet: tombol/target besar, minim ketikan manual (angka besar untuk PIN & pembayaran)
+- [x] 8.2 Pastikan semua teks berbahasa Indonesia dan format Rupiah konsisten (tanpa desimal)
+- [x] 8.3 Uji alur "pilih meja → order → bayar" agar terasa cepat (minim langkah, minim loading blocking)
+- [x] 8.4 Penanganan error dasar (koneksi terputus sementara, karena diasumsikan WiFi stabil tanpa mode offline)
+- [x] 8.5 Review keamanan dasar: PIN tidak tersimpan plain text, akses halaman dilindungi session login
 
 ## Fase 9 — Testing & Go-Live
 
