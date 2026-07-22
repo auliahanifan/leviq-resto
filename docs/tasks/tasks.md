@@ -48,8 +48,8 @@ Setiap task punya referensi FR (Functional Requirement) dari PRD bila relevan. U
 
 ## Fase 4 — Manajemen Meja (FR3.1–FR3.2)
 
-- [ ] 4.1 Halaman utama: grid/daftar meja dengan status visual (Kosong/Terisi) — FR3.1
-- [ ] 4.2 Pengaturan meja: tambah/hapus meja secara bebas (bukan hard-coded, sesuai asumsi 8.2)
+- [x] 4.1 Halaman utama: grid/daftar meja dengan status visual (Kosong/Terisi) — FR3.1
+- [x] 4.2 Pengaturan meja: tambah/hapus meja secara bebas (bukan hard-coded, sesuai asumsi 8.2)
 - [ ] 4.3 Logic auto-update status meja mengikuti siklus order (FR3.2)
 - [ ] 4.4 Verifikasi: tambah/hapus meja tercermin di halaman utama, status berubah otomatis saat order dibuat/lunas
 
