@@ -1,3 +1,7 @@
+LeviqResto — aplikasi kasir (POS). Lihat [PRD](docs/PRD.md) dan [task list](docs/tasks/tasks.md).
+
+Production: https://leviq-resto.vercel.app (auto-deploy dari branch `main` via Vercel).
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
