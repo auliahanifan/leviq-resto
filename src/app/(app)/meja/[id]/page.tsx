@@ -38,12 +38,15 @@ export default async function MejaPage({
     return <OrderSummary table={table} order={order} items={items ?? []} />;
   }
 
-  const { data: draftOrder } = await supabase
-    .from("orders")
-    .select("id")
-    .eq("table_id", id)
-    .eq("status", "draft")
-    .maybeSingle();
+  const [{ data: draftOrder }, { data: menuItems }] = await Promise.all([
+    supabase.from("orders").select("id").eq("table_id", id).eq("status", "draft").maybeSingle(),
+    supabase
+      .from("menu_items")
+      .select("id, nama, harga, kategori")
+      .eq("is_active", true)
+      .order("kategori")
+      .order("nama"),
+  ]);
 
   const { data: cartItems } = draftOrder
     ? await supabase
@@ -52,13 +55,6 @@ export default async function MejaPage({
         .eq("order_id", draftOrder.id)
         .order("created_at")
     : { data: [] };
-
-  const { data: menuItems } = await supabase
-    .from("menu_items")
-    .select("id, nama, harga, kategori")
-    .eq("is_active", true)
-    .order("kategori")
-    .order("nama");
 
   return (
     <OrderCart
