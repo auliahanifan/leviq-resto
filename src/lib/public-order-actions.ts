@@ -172,6 +172,40 @@ export async function decrementPublicCartItemAction(
   revalidatePath(`/order/${tableId}`);
 }
 
+export async function addItemToActiveOrderAction(
+  tableId: string,
+  menuItemId: string
+): Promise<ActionResult> {
+  const supabase = await createClient();
+
+  const [{ data: order }, { data: menuItem }] = await Promise.all([
+    supabase
+      .from("orders")
+      .select("id, total")
+      .eq("table_id", tableId)
+      .eq("status", "confirmed")
+      .maybeSingle(),
+    supabase.from("menu_items").select("nama, harga").eq("id", menuItemId).single(),
+  ]);
+
+  if (!order) return { error: "Order aktif tidak ditemukan." };
+  if (!menuItem) return { error: "Item menu tidak ditemukan." };
+
+  await Promise.all([
+    supabase.from("order_items").insert({
+      order_id: order.id,
+      menu_item_id: menuItemId,
+      nama: menuItem.nama,
+      harga: menuItem.harga,
+      qty: 1,
+      subtotal: menuItem.harga,
+    }),
+    supabase.from("orders").update({ total: order.total + menuItem.harga }).eq("id", order.id),
+  ]);
+
+  revalidatePath(`/order/${tableId}`);
+}
+
 export async function confirmPublicOrderAction(tableId: string): Promise<ActionResult> {
   const supabase = await createClient();
 

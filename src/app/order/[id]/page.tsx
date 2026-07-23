@@ -35,7 +35,21 @@ export default async function PublicOrderPage({
           .order("created_at")
       : { data: [] };
 
-    return <PublicOrderConfirmation table={table} order={order} items={items ?? []} />;
+    const { data: menuItems } = await supabase
+      .from("menu_items")
+      .select("id, nama, harga, kategori, foto_url, deskripsi")
+      .eq("is_active", true)
+      .order("kategori")
+      .order("nama");
+
+    return (
+      <PublicOrderConfirmation
+        table={table}
+        order={order}
+        items={items ?? []}
+        menuItems={menuItems ?? []}
+      />
+    );
   }
 
   const { data: draftOrder } = await supabase

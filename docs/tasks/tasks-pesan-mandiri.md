@@ -49,11 +49,11 @@ Setiap task punya referensi FR-SO (Functional Requirement Self-Order) dari PRD b
 
 ## Fase 5 — Order Tambahan (FR-SO4.1–4.3, amandemen FR4.3)
 
-- [ ] 5.1 Saat meja berstatus "Terisi" dengan order `confirmed` yang belum `paid`, `/order/[id-meja]` tetap bisa diakses untuk menambah item baru — FR-SO4.1
-- [ ] 5.2 Server action "tambah item ke order aktif": insert `order_items` baru langsung ke `order_id` yang sudah `confirmed` (bukan bikin order baru), lalu update total order (pola sama seperti `adjustOrderTotal` existing) — FR-SO4.2
-- [ ] 5.3 Pastikan action ini **hanya menambah item baru**, tidak mengizinkan edit/hapus item lama dari order `confirmed` tsb — sesuai batasan amandemen FR-SO4.3
-- [ ] 5.4 UI pelanggan membedakan tampilan "menu tambahan" (meja sudah terisi) vs "keranjang awal" (meja masih kosong) secukupnya agar tidak membingungkan
-- [ ] 5.5 Verifikasi: order tambahan berhasil menaikkan total order yang sama; halaman bayar & tutup kasir kasir tetap menghitung total dengan benar (regresi terhadap Fase 6 & 7 tasks.md existing)
+- [x] 5.1 Saat meja berstatus "Terisi" dengan order `confirmed` yang belum `paid`, `/order/[id-meja]` tetap bisa diakses untuk menambah item baru — FR-SO4.1
+- [x] 5.2 Server action "tambah item ke order aktif": insert `order_items` baru langsung ke `order_id` yang sudah `confirmed` (bukan bikin order baru), lalu update total order (pola sama seperti `adjustOrderTotal` existing) — FR-SO4.2
+- [x] 5.3 Pastikan action ini **hanya menambah item baru**, tidak mengizinkan edit/hapus item lama dari order `confirmed` tsb — sesuai batasan amandemen FR-SO4.3
+- [x] 5.4 UI pelanggan membedakan tampilan "menu tambahan" (meja sudah terisi) vs "keranjang awal" (meja masih kosong) secukupnya agar tidak membingungkan
+- [x] 5.5 Verifikasi: order tambahan berhasil menaikkan total order yang sama; halaman bayar & tutup kasir kasir tetap menghitung total dengan benar (regresi terhadap Fase 6 & 7 tasks.md existing) — dicoba end-to-end di browser dev terhadap Meja 1 (produksi): submit order awal (Ayam Bakar) → status "Terisi" → tambah Mie Goreng lewat "Mau tambah pesanan lagi?" → total naik jadi Rp 53.000 baik di `/order/[id]` maupun halaman kasir `/meja/[id]`. Order test dibatalkan lagi setelahnya supaya data produksi bersih.
 
 ## Fase 6 — Kontrol Kasir & Kompatibilitas (FR-SO5.1–5.2)
 

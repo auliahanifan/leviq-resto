@@ -9,6 +9,7 @@ import {
 } from "@/lib/public-order-actions";
 import { Button } from "@/components/ui/Button";
 import { formatRupiah } from "@/lib/format";
+import { groupByKategori, type MenuItem } from "@/lib/menu";
 
 type Table = { id: string; nama: string; status: string };
 type CartItem = {
@@ -18,14 +19,6 @@ type CartItem = {
   harga: number;
   qty: number;
   subtotal: number;
-};
-type MenuItem = {
-  id: string;
-  nama: string;
-  harga: number;
-  kategori: string | null;
-  foto_url: string | null;
-  deskripsi: string | null;
 };
 
 type CartUpdate =
@@ -70,17 +63,6 @@ function applyOptimisticUpdate(items: CartItem[], update: CartUpdate): CartItem[
         )
         .filter((item) => item.qty > 0);
   }
-}
-
-function groupByKategori(items: MenuItem[]): [string, MenuItem[]][] {
-  const map = new Map<string, MenuItem[]>();
-  for (const item of items) {
-    const key = item.kategori?.trim() || "Lainnya";
-    const list = map.get(key) ?? [];
-    list.push(item);
-    map.set(key, list);
-  }
-  return Array.from(map.entries());
 }
 
 export function PublicOrderCart({
