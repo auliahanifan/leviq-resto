@@ -39,13 +39,13 @@ Setiap task punya referensi FR-SO (Functional Requirement Self-Order) dari PRD b
 
 ## Fase 4 — Keranjang & Submit Pelanggan (FR-SO3.1–3.4)
 
-- [ ] 4.1 Server actions baru untuk alur pelanggan (**tanpa** `requireSession()`, berbeda dari `order-actions.ts` existing yang mensyaratkan PIN kasir) — misal `public-order-actions.ts`
-- [ ] 4.2 Reuse logic "get or create draft order" untuk meja yang masih "kosong" (adaptasi dari `getOrCreateDraftOrder` existing, tanpa gating status meja "kosong" karena pelanggan yang memicu, bukan kasir)
-- [ ] 4.3 Komponen keranjang mobile: tambah/kurangi qty/hapus item bebas sebelum submit — FR-SO3.1
-- [ ] 4.4 Tombol "Pesan Sekarang" → transisi status order `draft` → `confirmed` otomatis (tanpa approval manual), meja → "Terisi" — FR-SO3.2
-- [ ] 4.5 Layar konfirmasi setelah submit: ringkasan item & total — FR-SO3.3
-- [ ] 4.6 Setelah submit, item order tsb tidak bisa diedit/dihapus lagi dari sisi pelanggan (hanya baca) — FR-SO3.4
-- [ ] 4.7 Verifikasi: pelanggan bisa ubah keranjang bebas sebelum submit, submit mengunci item & mengubah status meja, layar konfirmasi tampil benar
+- [x] 4.1 Server actions baru untuk alur pelanggan (**tanpa** `requireSession()`, berbeda dari `order-actions.ts` existing yang mensyaratkan PIN kasir) — misal `public-order-actions.ts`
+- [x] 4.2 Reuse logic "get or create draft order" untuk meja yang masih "kosong" (adaptasi dari `getOrCreateDraftOrder` existing, tanpa gating status meja "kosong" karena pelanggan yang memicu, bukan kasir)
+- [x] 4.3 Komponen keranjang mobile: tambah/kurangi qty/hapus item bebas sebelum submit — FR-SO3.1 (qty stepper inline per item; kurangi qty ke 0 = hapus)
+- [x] 4.4 Tombol "Pesan Sekarang" → transisi status order `draft` → `confirmed` otomatis (tanpa approval manual), meja → "Terisi" — FR-SO3.2
+- [x] 4.5 Layar konfirmasi setelah submit: ringkasan item & total — FR-SO3.3
+- [x] 4.6 Setelah submit, item order tsb tidak bisa diedit/dihapus lagi dari sisi pelanggan (hanya baca) — FR-SO3.4 (page re-render ke `PublicOrderConfirmation` read-only begitu meja "terisi")
+- [x] 4.7 Verifikasi: dicoba end-to-end di browser dev terhadap Meja 1 (produksi) — tambah 3 item, kurangi 1 sampai terhapus, submit → total & status meja benar, layar konfirmasi tampil read-only. Order test dibatalkan lagi setelahnya (`status='cancelled'`, meja balik "kosong") supaya data produksi bersih.
 
 ## Fase 5 — Order Tambahan (FR-SO4.1–4.3, amandemen FR4.3)
 

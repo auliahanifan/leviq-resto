@@ -1,0 +1,254 @@
+"use client";
+
+import { useOptimistic, useState, useTransition } from "react";
+import {
+  addItemToPublicCartAction,
+  confirmPublicOrderAction,
+  decrementPublicCartItemAction,
+  incrementPublicCartItemAction,
+} from "@/lib/public-order-actions";
+import { Button } from "@/components/ui/Button";
+import { formatRupiah } from "@/lib/format";
+
+type Table = { id: string; nama: string; status: string };
+type CartItem = {
+  id: string;
+  menu_item_id: string | null;
+  nama: string;
+  harga: number;
+  qty: number;
+  subtotal: number;
+};
+type MenuItem = {
+  id: string;
+  nama: string;
+  harga: number;
+  kategori: string | null;
+  foto_url: string | null;
+  deskripsi: string | null;
+};
+
+type CartUpdate =
+  | { type: "add"; menuItem: MenuItem }
+  | { type: "increment"; id: string }
+  | { type: "decrement"; id: string };
+
+function applyOptimisticUpdate(items: CartItem[], update: CartUpdate): CartItem[] {
+  switch (update.type) {
+    case "add": {
+      const existing = items.find((item) => item.menu_item_id === update.menuItem.id);
+      if (existing) {
+        const qty = existing.qty + 1;
+        return items.map((item) =>
+          item.id === existing.id ? { ...item, qty, subtotal: qty * item.harga } : item
+        );
+      }
+      return [
+        ...items,
+        {
+          id: `temp-${update.menuItem.id}`,
+          menu_item_id: update.menuItem.id,
+          nama: update.menuItem.nama,
+          harga: update.menuItem.harga,
+          qty: 1,
+          subtotal: update.menuItem.harga,
+        },
+      ];
+    }
+    case "increment":
+      return items.map((item) =>
+        item.id === update.id
+          ? { ...item, qty: item.qty + 1, subtotal: (item.qty + 1) * item.harga }
+          : item
+      );
+    case "decrement":
+      return items
+        .map((item) =>
+          item.id === update.id
+            ? { ...item, qty: item.qty - 1, subtotal: (item.qty - 1) * item.harga }
+            : item
+        )
+        .filter((item) => item.qty > 0);
+  }
+}
+
+function groupByKategori(items: MenuItem[]): [string, MenuItem[]][] {
+  const map = new Map<string, MenuItem[]>();
+  for (const item of items) {
+    const key = item.kategori?.trim() || "Lainnya";
+    const list = map.get(key) ?? [];
+    list.push(item);
+    map.set(key, list);
+  }
+  return Array.from(map.entries());
+}
+
+export function PublicOrderCart({
+  table,
+  cartItems,
+  menuItems,
+}: {
+  table: Table;
+  cartItems: CartItem[];
+  menuItems: MenuItem[];
+}) {
+  const [isConfirming, startConfirmTransition] = useTransition();
+  const [, startCartTransition] = useTransition();
+  const [error, setError] = useState<string>();
+  const [pendingKeys, setPendingKeys] = useState<Set<string>>(new Set());
+  const [optimisticItems, applyOptimistic] = useOptimistic(cartItems, applyOptimisticUpdate);
+
+  const groups = groupByKategori(menuItems);
+  const kategoris = groups.map(([kategori]) => kategori);
+  const [activeKategori, setActiveKategori] = useState<string>(kategoris[0] ?? "");
+  const activeItems = groups.find(([kategori]) => kategori === activeKategori)?.[1] ?? [];
+
+  const optimisticTotal = optimisticItems.reduce((sum, item) => sum + item.subtotal, 0);
+  const optimisticCount = optimisticItems.reduce((sum, item) => sum + item.qty, 0);
+
+  function run(
+    key: string,
+    update: CartUpdate,
+    action: () => Promise<{ error?: string } | undefined>
+  ) {
+    setPendingKeys((prev) => new Set(prev).add(key));
+    startCartTransition(async () => {
+      applyOptimistic(update);
+      const result = await action();
+      setError(result?.error);
+      setPendingKeys((prev) => {
+        const next = new Set(prev);
+        next.delete(key);
+        return next;
+      });
+    });
+  }
+
+  if (menuItems.length === 0) {
+    return <p className="px-6 py-8 text-lg text-zinc-500">Belum ada menu aktif.</p>;
+  }
+
+  return (
+    <div className="flex flex-1 flex-col pb-28">
+      <div className="flex gap-2 overflow-x-auto border-b border-zinc-200 px-4 py-3 dark:border-zinc-800">
+        {kategoris.map((kategori) => (
+          <button
+            key={kategori}
+            type="button"
+            onClick={() => setActiveKategori(kategori)}
+            className={`min-h-12 shrink-0 rounded-full px-4 text-base font-medium ${
+              kategori === activeKategori
+                ? "bg-foreground text-background"
+                : "bg-zinc-200 dark:bg-zinc-800"
+            }`}
+          >
+            {kategori}
+          </button>
+        ))}
+      </div>
+
+      <ul className="flex flex-col gap-3 px-4 py-4">
+        {activeItems.map((item) => {
+          const cartItem = optimisticItems.find((ci) => ci.menu_item_id === item.id);
+          const key = cartItem?.id ?? `menu-${item.id}`;
+          const itemPending = pendingKeys.has(key) || key.startsWith("temp-");
+
+          return (
+            <li
+              key={item.id}
+              className="flex gap-3 rounded-xl border border-zinc-300 p-3 dark:border-zinc-700"
+            >
+              {item.foto_url ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={item.foto_url}
+                  alt={item.nama}
+                  className="h-20 w-20 shrink-0 rounded-lg object-cover"
+                />
+              ) : (
+                <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-lg bg-zinc-200 text-3xl dark:bg-zinc-800">
+                  🍽️
+                </div>
+              )}
+              <div className="flex flex-1 flex-col gap-1">
+                <p className="font-medium">{item.nama}</p>
+                {item.deskripsi && (
+                  <p className="text-sm text-zinc-500">{item.deskripsi}</p>
+                )}
+                <p className="font-medium">{formatRupiah(item.harga)}</p>
+              </div>
+              <div className="flex items-center">
+                {!cartItem || cartItem.qty === 0 ? (
+                  <button
+                    type="button"
+                    disabled={itemPending}
+                    onClick={() =>
+                      run(`menu-${item.id}`, { type: "add", menuItem: item }, () =>
+                        addItemToPublicCartAction(table.id, item.id)
+                      )
+                    }
+                    className="min-h-12 min-w-12 rounded-lg bg-foreground px-4 text-lg font-bold text-background disabled:opacity-40"
+                  >
+                    +
+                  </button>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      disabled={itemPending}
+                      onClick={() =>
+                        run(cartItem.id, { type: "decrement", id: cartItem.id }, () =>
+                          decrementPublicCartItemAction(cartItem.id, table.id)
+                        )
+                      }
+                      className="min-h-12 min-w-12 rounded-lg bg-zinc-200 text-lg font-bold disabled:opacity-40 dark:bg-zinc-800"
+                    >
+                      −
+                    </button>
+                    <span className="w-6 text-center font-medium">{cartItem.qty}</span>
+                    <button
+                      type="button"
+                      disabled={itemPending}
+                      onClick={() =>
+                        run(cartItem.id, { type: "increment", id: cartItem.id }, () =>
+                          incrementPublicCartItemAction(cartItem.id, table.id)
+                        )
+                      }
+                      className="min-h-12 min-w-12 rounded-lg bg-zinc-200 text-lg font-bold disabled:opacity-40 dark:bg-zinc-800"
+                    >
+                      +
+                    </button>
+                  </div>
+                )}
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+
+      <div className="fixed inset-x-0 bottom-0 mx-auto flex w-full max-w-lg flex-col gap-3 border-t border-zinc-300 bg-background px-4 py-4 dark:border-zinc-700">
+        {error && (
+          <p role="alert" className="text-base font-medium text-red-600">
+            {error}
+          </p>
+        )}
+        <div className="flex items-center justify-between text-lg font-bold">
+          <span>{optimisticCount} item</span>
+          <span>{formatRupiah(optimisticTotal)}</span>
+        </div>
+        <Button
+          type="button"
+          disabled={isConfirming || optimisticItems.length === 0}
+          onClick={() =>
+            startConfirmTransition(async () => {
+              const result = await confirmPublicOrderAction(table.id);
+              setError(result?.error);
+            })
+          }
+        >
+          {isConfirming ? "Memproses..." : "Pesan Sekarang"}
+        </Button>
+      </div>
+    </div>
+  );
+}
