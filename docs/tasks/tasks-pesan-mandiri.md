@@ -57,10 +57,10 @@ Setiap task punya referensi FR-SO (Functional Requirement Self-Order) dari PRD b
 
 ## Fase 6 — Kontrol Kasir & Kompatibilitas (FR-SO5.1–5.2)
 
-- [ ] 6.1 Uji ulang `cancelOrderAction` existing terhadap order yang sudah ditambah item dari pelanggan — pastikan tetap membatalkan seluruh order & mengembalikan meja ke "Kosong" — FR-SO5.1
-- [ ] 6.2 Uji ulang `payOrderAction` existing terhadap order gabungan (kasir + pelanggan / beberapa ronde pesan tambahan) — total & kembalian tetap akurat — FR-SO5.2
-- [ ] 6.3 Pastikan layar utama kasir (daftar meja) tidak butuh perubahan untuk menampilkan meja yang order-nya berasal dari pelanggan — tetap tampil "Terisi" seperti biasa
-- [ ] 6.4 Verifikasi: alur end-to-end kasir (lihat meja terisi → bayar → tutup kasir) tidak berubah perilakunya walau order berasal dari `/order`
+- [x] 6.1 Uji ulang `cancelOrderAction` existing terhadap order yang sudah ditambah item dari pelanggan — pastikan tetap membatalkan seluruh order & mengembalikan meja ke "Kosong" — FR-SO5.1 (kode tidak berubah: action beroperasi per `order.id` & status, tidak peduli asal `order_items`)
+- [x] 6.2 Uji ulang `payOrderAction` existing terhadap order gabungan (kasir + pelanggan / beberapa ronde pesan tambahan) — total & kembalian tetap akurat — FR-SO5.2 (total dibaca dari `orders.total` yang sudah disinkronkan tiap mutasi, termasuk oleh `addItemToActiveOrderAction`)
+- [x] 6.3 Pastikan layar utama kasir (daftar meja) tidak butuh perubahan untuk menampilkan meja yang order-nya berasal dari pelanggan — tetap tampil "Terisi" seperti biasa (kode `src/app/(app)/page.tsx` hanya baca `tables.status`, tidak peduli siapa yang set)
+- [x] 6.4 Verifikasi: alur end-to-end kasir (lihat meja terisi → bayar → tutup kasir) tidak berubah perilakunya walau order berasal dari `/order` — dicoba end-to-end di browser dev terhadap Meja 1 (produksi), 2 skenario: (a) order awal via `/order/[id]` (pelanggan) + tambahan via "tambah pesanan lagi" → `Batalkan Order` di kasir → meja balik "Kosong"; (b) order awal via kasir (Ayam Bakar Rp30.000) → tambahan via `/order/[id]` (Mie Goreng Rp23.000) → total gabungan Rp53.000 tampil benar di halaman bayar → bayar tunai Rp100.000 → kembalian Rp47.000 tepat, struk & status meja "Kosong" setelahnya benar. Tidak ada perubahan kode diperlukan; daftar meja kasir tetap tampil normal untuk kedua kasus.
 
 ## Fase 7 — Manajemen Menu: Foto & Deskripsi (FR-SO6.1–6.3, perluasan Fase 3 tasks.md)
 
