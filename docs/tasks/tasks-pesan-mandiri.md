@@ -24,18 +24,18 @@ Setiap task punya referensi FR-SO (Functional Requirement Self-Order) dari PRD b
 - [x] 2.1 Tambah tombol "Lihat/Cetak QR" di halaman Kelola Meja (existing, extend dari Fase 4 tasks.md) untuk tiap baris meja
 - [x] 2.2 Generate QR code (client-side) dari URL `/order/[id-meja]` memakai id meja yang sudah ada — FR-SO1.1
 - [x] 2.3 Tampilan QR bisa diunduh/print-friendly (misal buka di halaman/modal terpisah yang layak diprint) — FR-SO1.2
-- [ ] 2.4 Halaman `/order/[id-meja]` dengan id tidak valid/sudah dihapus menampilkan "Meja tidak ditemukan" (notFound) — FR-SO1.4 (dibangun bareng Fase 3, lihat 3.x)
-- [ ] 2.5 Verifikasi: scan QR dari HP fisik mengarah ke halaman order meja yang benar; id acak/terhapus menampilkan halaman error (verifikasi browser bareng Fase 3; scan HP fisik ada di Fase 9)
+- [x] 2.4 Halaman `/order/[id-meja]` dengan id tidak valid/sudah dihapus menampilkan "Meja tidak ditemukan" (notFound) — FR-SO1.4
+- [x] 2.5 Verifikasi (parsial): id acak di browser dev menampilkan halaman 404, bukan redirect ke /login; scan dari HP fisik masih menyusul di Fase 9
 
 ## Fase 3 — Route Publik & Lihat Menu (FR-SO2.1–2.3, FR-SO1.3)
 
-- [ ] 3.1 Buat route group baru di luar `(app)` (misal `src/app/order/[id]/page.tsx`) yang **tidak** dilindungi session/PIN — FR-SO1.3
-- [ ] 3.2 Layout khusus mobile-first untuk route ini (terpisah dari `AppHeader`/layout tablet existing) — lihat asumsi 8.5 PRD
-- [ ] 3.3 Fetch meja by id + daftar menu `is_active = true`, urut per kategori (pola query sama seperti `meja/[id]/page.tsx` existing tapi tanpa auth)
-- [ ] 3.4 Tampilkan menu sebagai grid/list dengan nama, harga, foto (jika ada), deskripsi (jika ada) — FR-SO2.2
-- [ ] 3.5 Item tanpa foto tampil dengan placeholder generik — FR-SO2.3
-- [ ] 3.6 Filter/tab per kategori untuk navigasi menu di layar HP — FR-SO2.1
-- [ ] 3.7 Verifikasi: halaman terbuka tanpa perlu login, menu tampil benar, filter kategori berfungsi
+- [x] 3.1 Buat route group baru di luar `(app)` (misal `src/app/order/[id]/page.tsx`) yang **tidak** dilindungi session/PIN — FR-SO1.3
+- [x] 3.2 Layout khusus mobile-first untuk route ini (terpisah dari `AppHeader`/layout tablet existing) — lihat asumsi 8.5 PRD
+- [x] 3.3 Fetch meja by id + daftar menu `is_active = true`, urut per kategori (pola query sama seperti `meja/[id]/page.tsx` existing tapi tanpa auth)
+- [x] 3.4 Tampilkan menu sebagai grid/list dengan nama, harga, foto (jika ada), deskripsi (jika ada) — FR-SO2.2
+- [x] 3.5 Item tanpa foto tampil dengan placeholder generik — FR-SO2.3
+- [x] 3.6 Filter/tab per kategori untuk navigasi menu di layar HP — FR-SO2.1
+- [x] 3.7 Verifikasi: halaman terbuka tanpa perlu login, menu tampil benar, filter kategori berfungsi (dicek di browser: /order/[id] valid tampil menu + tab Makanan/Minuman berfungsi; id acak → 404 tanpa redirect ke /login)
 
 ## Fase 4 — Keranjang & Submit Pelanggan (FR-SO3.1–3.4)
 

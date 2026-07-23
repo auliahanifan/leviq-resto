@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 import { SESSION_COOKIE_NAME, isSessionTokenValid } from "@/lib/session-token";
 
 const PUBLIC_ROUTES = new Set(["/login"]);
-const PUBLIC_ROUTE_PREFIXES = ["/prompt-histories"];
+const PUBLIC_ROUTE_PREFIXES = ["/prompt-histories", "/order"];
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
