@@ -40,7 +40,7 @@ export default async function MejaPage({
 
   const { data: draftOrder } = await supabase
     .from("orders")
-    .select("id, total")
+    .select("id")
     .eq("table_id", id)
     .eq("status", "draft")
     .maybeSingle();
@@ -48,7 +48,7 @@ export default async function MejaPage({
   const { data: cartItems } = draftOrder
     ? await supabase
         .from("order_items")
-        .select("id, nama, harga, qty, subtotal")
+        .select("id, menu_item_id, nama, harga, qty, subtotal")
         .eq("order_id", draftOrder.id)
         .order("created_at")
     : { data: [] };
@@ -64,7 +64,6 @@ export default async function MejaPage({
     <OrderCart
       table={table}
       cartItems={cartItems ?? []}
-      total={draftOrder?.total ?? 0}
       menuItems={menuItems ?? []}
     />
   );

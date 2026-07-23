@@ -8,14 +8,15 @@ import { requireSession } from "@/lib/session";
 type SupabaseServerClient = Awaited<ReturnType<typeof createClient>>;
 type ActionResult = { error?: string } | undefined;
 
-async function recomputeOrderTotal(supabase: SupabaseServerClient, orderId: string) {
-  const { data: items } = await supabase
-    .from("order_items")
-    .select("subtotal")
-    .eq("order_id", orderId);
+async function adjustOrderTotal(supabase: SupabaseServerClient, orderId: string, delta: number) {
+  const { data: order } = await supabase
+    .from("orders")
+    .select("total")
+    .eq("id", orderId)
+    .single();
 
-  const total = (items ?? []).reduce((sum, item) => sum + item.subtotal, 0);
-  await supabase.from("orders").update({ total }).eq("id", orderId);
+  if (!order) return;
+  await supabase.from("orders").update({ total: order.total + delta }).eq("id", orderId);
 }
 
 async function getOrCreateDraftOrder(
@@ -77,6 +78,7 @@ export async function addItemToCartAction(
       .from("order_items")
       .update({ qty, subtotal: qty * existingItem.harga })
       .eq("id", existingItem.id);
+    await adjustOrderTotal(supabase, orderId, existingItem.harga);
   } else {
     const { data: menuItem } = await supabase
       .from("menu_items")
@@ -96,9 +98,9 @@ export async function addItemToCartAction(
       qty: 1,
       subtotal: menuItem.harga,
     });
+    await adjustOrderTotal(supabase, orderId, menuItem.harga);
   }
 
-  await recomputeOrderTotal(supabase, orderId);
   revalidatePath(`/meja/${tableId}`);
 }
 
@@ -124,7 +126,7 @@ export async function incrementCartItemAction(
     .update({ qty, subtotal: qty * item.harga })
     .eq("id", item.id);
 
-  await recomputeOrderTotal(supabase, item.order_id);
+  await adjustOrderTotal(supabase, item.order_id, item.harga);
   revalidatePath(`/meja/${tableId}`);
 }
 
@@ -146,15 +148,16 @@ export async function decrementCartItemAction(
 
   if (item.qty <= 1) {
     await supabase.from("order_items").delete().eq("id", item.id);
+    await adjustOrderTotal(supabase, item.order_id, -item.harga);
   } else {
     const qty = item.qty - 1;
     await supabase
       .from("order_items")
       .update({ qty, subtotal: qty * item.harga })
       .eq("id", item.id);
+    await adjustOrderTotal(supabase, item.order_id, -item.harga);
   }
 
-  await recomputeOrderTotal(supabase, item.order_id);
   revalidatePath(`/meja/${tableId}`);
 }
 
@@ -168,14 +171,14 @@ export async function removeCartItemAction(
 
   const { data: item } = await supabase
     .from("order_items")
-    .select("order_id")
+    .select("order_id, subtotal")
     .eq("id", orderItemId)
     .single();
 
   if (!item) return { error: "Item tidak ditemukan." };
 
   await supabase.from("order_items").delete().eq("id", orderItemId);
-  await recomputeOrderTotal(supabase, item.order_id);
+  await adjustOrderTotal(supabase, item.order_id, -item.subtotal);
   revalidatePath(`/meja/${tableId}`);
 }
 
@@ -217,7 +220,7 @@ export async function confirmOrderAction(tableId: string): Promise<ActionResult>
   await supabase.from("tables").update({ status: "terisi" }).eq("id", tableId);
 
   revalidatePath("/");
-  redirect("/");
+  redirect(`/meja/${tableId}/bayar`);
 }
 
 export async function cancelOrderAction(tableId: string): Promise<ActionResult> {
