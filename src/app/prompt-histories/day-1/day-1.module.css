@@ -99,7 +99,7 @@
 
 .stats {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(7.5em, 1fr));
   gap: 1px;
   margin: 2em 0 2.6em;
   background: var(--rule);
@@ -196,9 +196,16 @@
 
 .entry {
   display: grid;
-  grid-template-columns: 4.4em 1fr;
+  grid-template-columns: 6.4em 1fr;
   gap: 0 1.1em;
   padding-left: 0.1em;
+}
+
+.entryBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  min-width: 0;
 }
 
 .entryMeta {
@@ -240,6 +247,83 @@
   font-family: var(--fontDisplay);
 }
 
+.details {
+  border-left: 2px solid var(--rule);
+  padding-left: 0.95em;
+}
+
+.summary {
+  cursor: pointer;
+  font-family: var(--fontMono);
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  color: var(--inkFaint);
+  padding: 0.2em 0;
+  user-select: none;
+}
+
+.summary:hover {
+  color: var(--accent);
+}
+
+.responseText {
+  font-size: 0.9rem;
+  color: var(--ink);
+  white-space: pre-wrap;
+  background: var(--paperRaised);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 0.85em 1em;
+  margin: 0.6em 0 0;
+}
+
+.toolListLabel {
+  font-family: var(--fontMono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--inkFaint);
+  margin: 0.9em 0 0.4em;
+}
+
+.toolList {
+  list-style: none;
+  margin: 0;
+  padding: 0.6em 0 0.2em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.32em;
+  max-height: 420px;
+  overflow-y: auto;
+  border-top: 1px dashed var(--rule);
+}
+
+.toolItem {
+  font-family: var(--fontMono);
+  font-size: 0.72rem;
+  line-height: 1.45;
+  display: grid;
+  grid-template-columns: 8em 1fr;
+  gap: 0.6em;
+}
+
+.toolName {
+  color: var(--accent);
+}
+
+.toolDetail {
+  color: var(--inkSoft);
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 480px) {
+  .toolItem {
+    grid-template-columns: 1fr;
+    gap: 0.1em;
+  }
+}
+
 .footer {
   margin-top: 3.6em;
   padding-top: 1.4em;
@@ -264,5 +348,8 @@
   }
   .stats {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .stat:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
   }
 }

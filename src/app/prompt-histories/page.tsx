@@ -13,8 +13,8 @@ const DAYS: Day[] = [
   {
     slug: "day-1",
     title: "Hari 1",
-    date: "22 Juli 2026",
-    promptCount: 12,
+    date: "22–23 Juli 2026",
+    promptCount: 15,
     sessionCount: 6,
   },
 ];
