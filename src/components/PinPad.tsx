@@ -1,5 +1,7 @@
 "use client";
 
+import { Delete } from "lucide-react";
+
 const DIGITS = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
 type PinPadProps = {
@@ -23,8 +25,8 @@ export function PinPad({ value, onChange, length = 4 }: PinPadProps) {
         {Array.from({ length }).map((_, i) => (
           <div
             key={i}
-            className={`h-5 w-5 rounded-full border-2 border-foreground ${
-              i < value.length ? "bg-foreground" : "bg-transparent"
+            className={`h-5 w-5 rounded-full border-2 border-primary ${
+              i < value.length ? "bg-primary" : "bg-transparent"
             }`}
           />
         ))}
@@ -35,7 +37,7 @@ export function PinPad({ value, onChange, length = 4 }: PinPadProps) {
             key={digit}
             type="button"
             onClick={() => press(digit)}
-            className="h-20 w-20 rounded-2xl bg-zinc-100 text-2xl font-semibold active:bg-zinc-200 dark:bg-zinc-800 dark:active:bg-zinc-700"
+            className="h-20 w-20 rounded-2xl bg-surface text-2xl font-semibold active:bg-border"
           >
             {digit}
           </button>
@@ -44,7 +46,7 @@ export function PinPad({ value, onChange, length = 4 }: PinPadProps) {
         <button
           type="button"
           onClick={() => press("0")}
-          className="h-20 w-20 rounded-2xl bg-zinc-100 text-2xl font-semibold active:bg-zinc-200 dark:bg-zinc-800 dark:active:bg-zinc-700"
+          className="h-20 w-20 rounded-2xl bg-surface text-2xl font-semibold active:bg-border"
         >
           0
         </button>
@@ -52,9 +54,9 @@ export function PinPad({ value, onChange, length = 4 }: PinPadProps) {
           type="button"
           onClick={backspace}
           aria-label="Hapus"
-          className="h-20 w-20 rounded-2xl bg-zinc-100 text-xl font-semibold active:bg-zinc-200 dark:bg-zinc-800 dark:active:bg-zinc-700"
+          className="flex h-20 w-20 items-center justify-center rounded-2xl bg-surface active:bg-border"
         >
-          ⌫
+          <Delete className="h-6 w-6" />
         </button>
       </div>
     </div>

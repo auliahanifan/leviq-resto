@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useState } from "react";
+import { Plus } from "lucide-react";
 import { addTableAction, type AddTableState } from "@/lib/table-actions";
 import { Button } from "@/components/ui/Button";
 
@@ -19,8 +20,9 @@ export function AddTableForm() {
 
   if (!open) {
     return (
-      <Button type="button" onClick={() => setOpen(true)}>
-        + Tambah Meja
+      <Button type="button" onClick={() => setOpen(true)} className="flex items-center gap-2">
+        <Plus className="h-5 w-5" />
+        Tambah Meja
       </Button>
     );
   }
@@ -28,7 +30,7 @@ export function AddTableForm() {
   return (
     <form
       action={formAction}
-      className="flex flex-col gap-4 rounded-xl border border-zinc-300 p-4 dark:border-zinc-700"
+      className="flex flex-col gap-4 rounded-2xl border border-border p-4"
     >
       <label className="flex flex-col gap-2 text-lg font-medium">
         Nama Meja
@@ -38,11 +40,11 @@ export function AddTableForm() {
           required
           autoFocus
           placeholder="mis. Meja 1"
-          className="min-h-16 rounded-xl border border-zinc-300 px-4 text-lg dark:border-zinc-700 dark:bg-zinc-900"
+          className="min-h-16 rounded-2xl border border-border px-4 text-lg"
         />
       </label>
       {state?.error && (
-        <p role="alert" className="text-lg font-medium text-red-600">
+        <p role="alert" className="text-lg font-medium text-danger">
           {state.error}
         </p>
       )}
@@ -50,13 +52,9 @@ export function AddTableForm() {
         <Button type="submit" disabled={pending} className="flex-1">
           {pending ? "Menyimpan..." : "Simpan"}
         </Button>
-        <button
-          type="button"
-          onClick={() => setOpen(false)}
-          className="min-h-16 flex-1 rounded-xl border border-zinc-300 px-6 text-lg font-medium active:opacity-80 dark:border-zinc-700"
-        >
+        <Button type="button" variant="outline" onClick={() => setOpen(false)} className="flex-1">
           Batal
-        </button>
+        </Button>
       </div>
     </form>
   );

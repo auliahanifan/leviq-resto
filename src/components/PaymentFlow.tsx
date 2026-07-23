@@ -48,8 +48,8 @@ export function PaymentFlow({ table, total }: { table: Table; total: number }) {
   if (receipt) {
     return (
       <div className="mx-auto flex w-full max-w-sm flex-1 flex-col items-center justify-center gap-6 px-6 py-12 text-center">
-        <h1 className="text-2xl font-bold">Pembayaran Berhasil</h1>
-        <div className="flex w-full flex-col gap-3 rounded-xl border border-zinc-300 p-6 dark:border-zinc-700">
+        <h1 className="text-2xl font-bold text-primary">Pembayaran Berhasil</h1>
+        <div className="flex w-full flex-col gap-3 rounded-2xl border border-border p-6">
           <p className="text-lg">{table.nama}</p>
           <div className="flex justify-between text-lg">
             <span>Metode</span>
@@ -76,7 +76,7 @@ export function PaymentFlow({ table, total }: { table: Table; total: number }) {
         </div>
         <Link
           href="/"
-          className="flex min-h-16 w-full items-center justify-center rounded-xl bg-foreground px-6 text-lg font-medium text-background active:opacity-80"
+          className="flex min-h-16 w-full items-center justify-center rounded-2xl bg-primary px-6 text-lg font-semibold text-white active:bg-primary-dark"
         >
           Selesai
         </Link>
@@ -96,8 +96,8 @@ export function PaymentFlow({ table, total }: { table: Table; total: number }) {
         <button
           type="button"
           onClick={() => selectMethod("tunai")}
-          className={`min-h-16 flex-1 rounded-xl border-2 text-lg font-medium ${
-            method === "tunai" ? "border-foreground" : "border-zinc-300 dark:border-zinc-700"
+          className={`min-h-16 flex-1 rounded-2xl border-2 text-lg font-medium ${
+            method === "tunai" ? "border-primary bg-primary-light" : "border-border"
           }`}
         >
           Tunai
@@ -105,8 +105,8 @@ export function PaymentFlow({ table, total }: { table: Table; total: number }) {
         <button
           type="button"
           onClick={() => selectMethod("kartu")}
-          className={`min-h-16 flex-1 rounded-xl border-2 text-lg font-medium ${
-            method === "kartu" ? "border-foreground" : "border-zinc-300 dark:border-zinc-700"
+          className={`min-h-16 flex-1 rounded-2xl border-2 text-lg font-medium ${
+            method === "kartu" ? "border-primary bg-primary-light" : "border-border"
           }`}
         >
           Kartu
@@ -119,7 +119,7 @@ export function PaymentFlow({ table, total }: { table: Table; total: number }) {
           <CashAmountPad value={amountStr} onChange={setAmountStr} />
           <div className="flex w-full justify-between text-lg">
             <span>Kembalian</span>
-            <span className={change < 0 ? "text-red-600" : "font-medium"}>
+            <span className={change < 0 ? "text-danger" : "font-medium"}>
               {formatRupiah(Math.max(change, 0))}
             </span>
           </div>
@@ -127,7 +127,7 @@ export function PaymentFlow({ table, total }: { table: Table; total: number }) {
       )}
 
       {error && (
-        <p role="alert" className="text-lg font-medium text-red-600">
+        <p role="alert" className="text-lg font-medium text-danger">
           {error}
         </p>
       )}

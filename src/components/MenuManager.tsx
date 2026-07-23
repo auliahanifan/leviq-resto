@@ -13,18 +13,13 @@ import type { Database } from "@/lib/supabase/types";
 
 type MenuItem = Database["public"]["Tables"]["menu_items"]["Row"];
 
-const secondaryButton =
-  "min-h-16 min-w-16 rounded-xl px-6 text-lg font-medium bg-zinc-200 active:opacity-80 disabled:opacity-40 dark:bg-zinc-800";
-const dangerButton =
-  "min-h-16 min-w-16 rounded-xl px-6 text-lg font-medium bg-red-600 text-white active:opacity-80 disabled:opacity-40";
-
 export function MenuManager({ items }: { items: MenuItem[] }) {
   return (
     <div className="flex flex-col gap-8">
       <AddMenuItemForm />
       <ul className="flex flex-col gap-3">
         {items.length === 0 && (
-          <p className="text-lg text-zinc-500">Belum ada item menu.</p>
+          <p className="text-lg text-muted">Belum ada item menu.</p>
         )}
         {items.map((item) => (
           <MenuItemRow key={item.id} item={item} />
@@ -51,14 +46,14 @@ function AddMenuItemForm() {
     <form
       ref={formRef}
       action={formAction}
-      className="flex flex-col gap-4 rounded-xl border border-zinc-300 p-4 dark:border-zinc-700"
+      className="flex flex-col gap-4 rounded-2xl border border-border p-4"
     >
       <h2 className="text-lg font-bold">Tambah Item Menu</h2>
       <Field label="Nama" name="nama" required />
       <Field label="Harga (Rp)" name="harga" type="number" required />
       <Field label="Kategori (opsional)" name="kategori" />
       {state?.error && (
-        <p role="alert" className="text-base font-medium text-red-600">
+        <p role="alert" className="text-base font-medium text-danger">
           {state.error}
         </p>
       )}
@@ -96,7 +91,7 @@ function MenuItemRow({ item }: { item: MenuItem }) {
 
   if (editing) {
     return (
-      <li className="rounded-xl border border-zinc-300 p-4 dark:border-zinc-700">
+      <li className="rounded-2xl border border-border p-4">
         <form action={formAction} className="flex flex-col gap-4">
           <input type="hidden" name="id" value={item.id} />
           <Field label="Nama" name="nama" defaultValue={item.nama} required />
@@ -109,7 +104,7 @@ function MenuItemRow({ item }: { item: MenuItem }) {
           />
           <Field label="Kategori (opsional)" name="kategori" defaultValue={item.kategori ?? ""} />
           {state?.error && (
-            <p role="alert" className="text-base font-medium text-red-600">
+            <p role="alert" className="text-base font-medium text-danger">
               {state.error}
             </p>
           )}
@@ -117,13 +112,14 @@ function MenuItemRow({ item }: { item: MenuItem }) {
             <Button type="submit" disabled={pending} className="flex-1">
               {pending ? "Menyimpan..." : "Simpan"}
             </Button>
-            <button
+            <Button
               type="button"
+              variant="secondary"
               onClick={() => setEditing(false)}
-              className={`flex-1 ${secondaryButton}`}
+              className="flex-1"
             >
               Batal
-            </button>
+            </Button>
           </div>
         </form>
       </li>
@@ -131,26 +127,26 @@ function MenuItemRow({ item }: { item: MenuItem }) {
   }
 
   return (
-    <li className="flex items-center justify-between gap-4 rounded-xl border border-zinc-300 p-4 dark:border-zinc-700">
+    <li className="flex items-center justify-between gap-4 rounded-2xl border border-border p-4">
       <div>
         <p className="text-lg font-medium">{item.nama}</p>
-        <p className="text-base text-zinc-500">
+        <p className="text-base text-muted">
           {formatRupiah(item.harga)}
           {item.kategori ? ` · ${item.kategori}` : ""}
         </p>
       </div>
       <div className="flex gap-2">
-        <button type="button" onClick={() => setEditing(true)} className={secondaryButton}>
+        <Button type="button" variant="secondary" onClick={() => setEditing(true)}>
           Ubah
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
+          variant="danger"
           onClick={handleDeleteClick}
           disabled={deleting}
-          className={dangerButton}
         >
           {confirmingDelete ? "Yakin?" : "Hapus"}
-        </button>
+        </Button>
       </div>
     </li>
   );
@@ -179,7 +175,7 @@ function Field({
         required={required}
         inputMode={type === "number" ? "numeric" : undefined}
         min={type === "number" ? 0 : undefined}
-        className="min-h-16 rounded-xl border border-zinc-300 px-4 text-lg dark:border-zinc-700 dark:bg-zinc-900"
+        className="min-h-16 rounded-2xl border border-border px-4 text-lg"
       />
     </label>
   );

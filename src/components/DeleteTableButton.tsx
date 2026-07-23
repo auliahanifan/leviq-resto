@@ -26,12 +26,12 @@ export function DeleteTableButton({ id }: { id: string }) {
         type="button"
         onClick={handleClick}
         disabled={pending}
-        className="min-h-12 rounded-lg border border-red-300 px-4 text-base font-medium text-red-600 active:opacity-80 disabled:opacity-40 dark:border-red-800"
+        className="min-h-12 rounded-full border-2 border-danger px-4 text-base font-medium text-danger active:bg-danger-light disabled:opacity-40"
       >
         {pending ? "Menghapus..." : confirming ? "Yakin?" : "Hapus"}
       </button>
       {error && (
-        <p role="alert" className="text-sm font-medium text-red-600">
+        <p role="alert" className="text-sm font-medium text-danger">
           {error}
         </p>
       )}

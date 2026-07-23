@@ -14,10 +14,10 @@ export function TableQrCode({ tableId, tableName }: { tableId: string; tableName
 
   return (
     <div className="mx-auto flex w-full max-w-sm flex-1 flex-col items-center gap-6 px-6 py-8 print:py-0">
-      <div className="flex flex-col items-center gap-4 rounded-xl border border-zinc-300 p-8 print:border-none dark:border-zinc-700">
+      <div className="flex flex-col items-center gap-4 rounded-2xl border border-border p-8 print:border-none">
         <h1 className="text-2xl font-bold">{tableName}</h1>
         {orderUrl && <QRCodeSVG value={orderUrl} size={240} marginSize={2} />}
-        <p className="break-all text-center text-sm text-zinc-500">{orderUrl}</p>
+        <p className="break-all text-center text-sm text-muted">{orderUrl}</p>
       </div>
 
       <div className="flex w-full flex-col gap-3 print:hidden">
@@ -26,7 +26,7 @@ export function TableQrCode({ tableId, tableName }: { tableId: string; tableName
         </Button>
         <Link
           href="/"
-          className="flex min-h-16 items-center justify-center rounded-xl border border-zinc-300 px-6 text-lg font-medium active:opacity-80 dark:border-zinc-700"
+          className="flex min-h-16 items-center justify-center rounded-2xl border-2 border-border px-6 text-lg font-medium active:bg-surface"
         >
           Kembali
         </Link>

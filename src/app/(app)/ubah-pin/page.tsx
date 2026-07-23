@@ -18,12 +18,12 @@ export default function UbahPinPage() {
         <PinField label="PIN Baru" name="new_pin" />
         <PinField label="Konfirmasi PIN Baru" name="confirm_pin" />
         {state?.error && (
-          <p role="alert" className="text-lg font-medium text-red-600">
+          <p role="alert" className="text-lg font-medium text-danger">
             {state.error}
           </p>
         )}
         {state?.success && (
-          <p className="text-lg font-medium text-green-600">
+          <p className="text-lg font-medium text-primary">
             PIN berhasil diubah.
           </p>
         )}
@@ -46,7 +46,7 @@ function PinField({ label, name }: { label: string; name: string }) {
         maxLength={4}
         name={name}
         required
-        className="min-h-16 rounded-xl border border-zinc-300 px-4 text-center text-2xl tracking-[0.5em] dark:border-zinc-700 dark:bg-zinc-900"
+        className="min-h-16 rounded-2xl border border-border px-4 text-center text-2xl tracking-[0.5em]"
       />
     </label>
   );

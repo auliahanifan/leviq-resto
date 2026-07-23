@@ -1,6 +1,7 @@
 "use client";
 
 import { useOptimistic, useState, useTransition } from "react";
+import { Minus, Plus } from "lucide-react";
 import {
   addItemToCartAction,
   confirmOrderAction,
@@ -112,7 +113,7 @@ export function OrderCart({
         <h1 className="text-2xl font-bold">{table.nama} — Pilih Menu</h1>
         {groups.map(([kategori, items]) => (
           <div key={kategori} className="flex flex-col gap-3">
-            <h2 className="text-lg font-bold text-zinc-500">{kategori}</h2>
+            <h2 className="text-lg font-bold text-muted">{kategori}</h2>
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
               {items.map((item) => (
                 <button
@@ -124,24 +125,24 @@ export function OrderCart({
                       addItemToCartAction(table.id, item.id)
                     )
                   }
-                  className="flex min-h-20 flex-col items-center justify-center gap-1 rounded-xl border border-zinc-300 p-3 text-center active:opacity-80 disabled:opacity-40 dark:border-zinc-700"
+                  className="flex min-h-20 flex-col items-center justify-center gap-1 rounded-2xl border border-border p-3 text-center active:bg-surface disabled:opacity-40"
                 >
                   <span className="text-base font-medium">{item.nama}</span>
-                  <span className="text-sm text-zinc-500">{formatRupiah(item.harga)}</span>
+                  <span className="text-sm text-muted">{formatRupiah(item.harga)}</span>
                 </button>
               ))}
             </div>
           </div>
         ))}
         {menuItems.length === 0 && (
-          <p className="text-lg text-zinc-500">Belum ada item menu aktif.</p>
+          <p className="text-lg text-muted">Belum ada item menu aktif.</p>
         )}
       </div>
 
       <div className="flex w-full flex-col gap-4 lg:w-96">
         <h2 className="text-xl font-bold">Keranjang</h2>
         {optimisticItems.length === 0 ? (
-          <p className="text-lg text-zinc-500">Keranjang masih kosong.</p>
+          <p className="text-lg text-muted">Keranjang masih kosong.</p>
         ) : (
           <ul className="flex flex-col gap-3">
             {optimisticItems.map((item) => {
@@ -149,11 +150,11 @@ export function OrderCart({
               return (
                 <li
                   key={item.id}
-                  className="flex items-center justify-between gap-3 rounded-xl border border-zinc-300 p-3 dark:border-zinc-700"
+                  className="flex items-center justify-between gap-3 rounded-2xl border border-border p-3"
                 >
                   <div className="flex-1">
                     <p className="font-medium">{item.nama}</p>
-                    <p className="text-sm text-zinc-500">{formatRupiah(item.subtotal)}</p>
+                    <p className="text-sm text-muted">{formatRupiah(item.subtotal)}</p>
                   </div>
                   <div className="flex items-center gap-2">
                     <button
@@ -164,9 +165,10 @@ export function OrderCart({
                           decrementCartItemAction(item.id, table.id)
                         )
                       }
-                      className="min-h-12 min-w-12 rounded-lg bg-zinc-200 text-lg font-bold disabled:opacity-40 dark:bg-zinc-800"
+                      aria-label="Kurangi"
+                      className="flex min-h-12 min-w-12 items-center justify-center rounded-full bg-surface disabled:opacity-40"
                     >
-                      −
+                      <Minus className="h-4 w-4" />
                     </button>
                     <span className="w-6 text-center font-medium">{item.qty}</span>
                     <button
@@ -177,9 +179,10 @@ export function OrderCart({
                           incrementCartItemAction(item.id, table.id)
                         )
                       }
-                      className="min-h-12 min-w-12 rounded-lg bg-zinc-200 text-lg font-bold disabled:opacity-40 dark:bg-zinc-800"
+                      aria-label="Tambah"
+                      className="flex min-h-12 min-w-12 items-center justify-center rounded-full bg-primary text-white disabled:opacity-40"
                     >
-                      +
+                      <Plus className="h-4 w-4" />
                     </button>
                     <button
                       type="button"
@@ -189,7 +192,7 @@ export function OrderCart({
                           removeCartItemAction(item.id, table.id)
                         )
                       }
-                      className="min-h-12 rounded-lg px-3 text-sm font-medium text-red-600 disabled:opacity-40"
+                      className="min-h-12 rounded-full px-3 text-sm font-medium text-danger disabled:opacity-40"
                     >
                       Hapus
                     </button>
@@ -200,13 +203,13 @@ export function OrderCart({
           </ul>
         )}
 
-        <div className="flex items-center justify-between border-t border-zinc-300 pt-4 text-xl font-bold dark:border-zinc-700">
+        <div className="flex items-center justify-between border-t border-border pt-4 text-xl font-bold">
           <span>Total</span>
           <span>{formatRupiah(optimisticTotal)}</span>
         </div>
 
         {error && (
-          <p role="alert" className="text-lg font-medium text-red-600">
+          <p role="alert" className="text-lg font-medium text-danger">
             {error}
           </p>
         )}

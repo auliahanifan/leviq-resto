@@ -17,15 +17,15 @@ export default function LoginPage() {
   }, [state]);
 
   return (
-    <div className="flex flex-1 flex-col items-center justify-center gap-10 bg-zinc-50 px-6 py-12 dark:bg-black">
+    <div className="flex flex-1 flex-col items-center justify-center gap-10 bg-surface px-6 py-12">
       <div className="text-center">
-        <h1 className="text-3xl font-bold">LeviqResto</h1>
-        <p className="text-lg text-zinc-500">Masukkan PIN kasir</p>
+        <h1 className="text-3xl font-extrabold text-primary">LeviqResto</h1>
+        <p className="text-lg text-muted">Masukkan PIN kasir</p>
       </div>
       <form action={formAction} className="flex flex-col items-center gap-8">
         <PinPad value={pin} onChange={setPin} />
         <input type="hidden" name="pin" value={pin} />
-        <p role="alert" className="min-h-7 text-lg font-medium text-red-600">
+        <p role="alert" className="min-h-7 text-lg font-medium text-danger">
           {state?.error}
         </p>
         <Button type="submit" disabled={pending || pin.length !== 4} className="w-64">

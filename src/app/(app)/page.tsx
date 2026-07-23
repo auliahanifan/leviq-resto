@@ -19,7 +19,7 @@ export default async function HomePage() {
       <h1 className="text-2xl font-bold">Daftar Meja</h1>
       <AddTableForm />
       {!tables || tables.length === 0 ? (
-        <p className="text-lg text-zinc-500">
+        <p className="text-lg text-muted">
           Belum ada meja. Tambahkan meja baru untuk mulai.
         </p>
       ) : (
@@ -29,10 +29,8 @@ export default async function HomePage() {
             return (
               <div
                 key={table.id}
-                className={`flex flex-col items-center gap-3 rounded-xl border-2 p-5 ${
-                  isTerisi
-                    ? "border-orange-300 bg-orange-50 dark:border-orange-800 dark:bg-orange-950"
-                    : "border-green-300 bg-green-50 dark:border-green-800 dark:bg-green-950"
+                className={`flex flex-col items-center gap-3 rounded-2xl border-2 p-5 ${
+                  isTerisi ? "border-warning bg-warning-light" : "border-primary bg-primary-light"
                 }`}
               >
                 <Link
@@ -41,10 +39,8 @@ export default async function HomePage() {
                 >
                   <span className="text-xl font-bold">{table.nama}</span>
                   <span
-                    className={`rounded-full px-3 py-1 text-sm font-semibold ${
-                      isTerisi
-                        ? "bg-orange-200 text-orange-900 dark:bg-orange-900 dark:text-orange-200"
-                        : "bg-green-200 text-green-900 dark:bg-green-900 dark:text-green-200"
+                    className={`rounded-full px-3 py-1 text-sm font-semibold text-white ${
+                      isTerisi ? "bg-warning" : "bg-primary"
                     }`}
                   >
                     {isTerisi ? "Terisi" : "Kosong"}

@@ -28,13 +28,13 @@ export function CashClosingForm({ totalTunai }: { totalTunai: number }) {
 
       <div className="flex w-full justify-between text-lg">
         <span>Selisih</span>
-        <span className={selisih < 0 ? "font-medium text-red-600" : "font-medium"}>
+        <span className={selisih < 0 ? "font-medium text-danger" : "font-medium"}>
           {formatRupiah(selisih)}
         </span>
       </div>
 
       {state?.error && (
-        <p role="alert" className="text-lg font-medium text-red-600">
+        <p role="alert" className="text-lg font-medium text-danger">
           {state.error}
         </p>
       )}

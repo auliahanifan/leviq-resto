@@ -37,7 +37,7 @@ export function OrderSummary({
     return (
       <div className="flex flex-1 flex-col gap-4 px-6 py-8">
         <h1 className="text-2xl font-bold">{table.nama}</h1>
-        <p className="text-lg text-zinc-500">
+        <p className="text-lg text-muted">
           Meja ini berstatus terisi tapi order tidak ditemukan.
         </p>
       </div>
@@ -52,11 +52,11 @@ export function OrderSummary({
         {items.map((item) => (
           <li
             key={item.id}
-            className="flex items-center justify-between rounded-xl border border-zinc-300 p-3 dark:border-zinc-700"
+            className="flex items-center justify-between rounded-2xl border border-border p-3"
           >
             <div>
               <p className="font-medium">{item.nama}</p>
-              <p className="text-sm text-zinc-500">
+              <p className="text-sm text-muted">
                 {item.qty} × {formatRupiah(item.harga)}
               </p>
             </div>
@@ -65,13 +65,13 @@ export function OrderSummary({
         ))}
       </ul>
 
-      <div className="flex items-center justify-between border-t border-zinc-300 pt-4 text-xl font-bold dark:border-zinc-700">
+      <div className="flex items-center justify-between border-t border-border pt-4 text-xl font-bold">
         <span>Total</span>
         <span>{formatRupiah(order.total)}</span>
       </div>
 
       {error && (
-        <p role="alert" className="text-lg font-medium text-red-600">
+        <p role="alert" className="text-lg font-medium text-danger">
           {error}
         </p>
       )}
@@ -79,7 +79,7 @@ export function OrderSummary({
       <div className="flex flex-col gap-3">
         <Link
           href={`/meja/${table.id}/bayar`}
-          className="flex min-h-16 min-w-16 items-center justify-center rounded-xl bg-foreground px-6 text-lg font-medium text-background active:opacity-80"
+          className="flex min-h-16 min-w-16 items-center justify-center rounded-2xl bg-primary px-6 text-lg font-semibold text-white active:bg-primary-dark"
         >
           Bayar
         </Link>
@@ -87,7 +87,7 @@ export function OrderSummary({
           type="button"
           disabled={pending}
           onClick={handleCancelClick}
-          className="min-h-16 rounded-xl border border-red-300 px-6 text-lg font-medium text-red-600 active:opacity-80 disabled:opacity-40 dark:border-red-800"
+          className="min-h-16 rounded-2xl border-2 border-danger px-6 text-lg font-medium text-danger active:bg-danger-light disabled:opacity-40"
         >
           {pending ? "Membatalkan..." : confirming ? "Yakin batalkan order?" : "Batalkan Order"}
         </button>

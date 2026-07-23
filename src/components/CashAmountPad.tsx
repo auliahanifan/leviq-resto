@@ -1,5 +1,7 @@
 "use client";
 
+import { Delete } from "lucide-react";
+
 const DIGITS = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
 export function CashAmountPad({
@@ -24,7 +26,7 @@ export function CashAmountPad({
           key={digit}
           type="button"
           onClick={() => press(digit)}
-          className="h-16 w-16 rounded-xl bg-zinc-100 text-2xl font-semibold active:bg-zinc-200 dark:bg-zinc-800 dark:active:bg-zinc-700"
+          className="h-16 w-16 rounded-2xl bg-surface text-2xl font-semibold active:bg-border"
         >
           {digit}
         </button>
@@ -33,7 +35,7 @@ export function CashAmountPad({
       <button
         type="button"
         onClick={() => press("0")}
-        className="h-16 w-16 rounded-xl bg-zinc-100 text-2xl font-semibold active:bg-zinc-200 dark:bg-zinc-800 dark:active:bg-zinc-700"
+        className="h-16 w-16 rounded-2xl bg-surface text-2xl font-semibold active:bg-border"
       >
         0
       </button>
@@ -41,9 +43,9 @@ export function CashAmountPad({
         type="button"
         onClick={backspace}
         aria-label="Hapus"
-        className="h-16 w-16 rounded-xl bg-zinc-100 text-xl font-semibold active:bg-zinc-200 dark:bg-zinc-800 dark:active:bg-zinc-700"
+        className="flex h-16 w-16 items-center justify-center rounded-2xl bg-surface active:bg-border"
       >
-        ⌫
+        <Delete className="h-5 w-5" />
       </button>
     </div>
   );

@@ -17,7 +17,7 @@ export default function Error({
   return (
     <div className="flex flex-1 flex-col items-center justify-center gap-4 px-6 text-center">
       <h1 className="text-2xl font-bold">Terjadi Kesalahan</h1>
-      <p className="text-lg text-zinc-500">
+      <p className="text-lg text-muted">
         Sepertinya ada masalah koneksi. Periksa jaringan WiFi lalu coba lagi.
       </p>
       <Button type="button" onClick={() => unstable_retry()}>
