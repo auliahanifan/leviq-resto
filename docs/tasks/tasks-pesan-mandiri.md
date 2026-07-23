@@ -16,8 +16,8 @@ Setiap task punya referensi FR-SO (Functional Requirement Self-Order) dari PRD b
 
 ## Fase 1 — Skema Data (Perubahan)
 
-- [ ] 1.1 Migration: tambah kolom `foto_url` (text, nullable) dan `deskripsi` (text, nullable) ke `menu_items` — FR-SO6.1–6.3
-- [ ] 1.2 Verifikasi: migrasi berjalan tanpa error, item menu lama tetap valid dengan kedua kolom baru `null`
+- [x] 1.1 Migration: tambah kolom `foto_url` (text, nullable) dan `deskripsi` (text, nullable) ke `menu_items` — FR-SO6.1–6.3
+- [x] 1.2 Verifikasi: migrasi berjalan tanpa error, 8 item menu existing tetap valid dengan `foto_url`/`deskripsi` = `null`
 
 ## Fase 2 — QR Code per Meja (FR-SO1.1–1.4)
 

@@ -48,6 +48,8 @@ export type Database = {
       menu_items: {
         Row: {
           created_at: string
+          deskripsi: string | null
+          foto_url: string | null
           harga: number
           id: string
           is_active: boolean
@@ -57,6 +59,8 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          deskripsi?: string | null
+          foto_url?: string | null
           harga: number
           id?: string
           is_active?: boolean
@@ -66,6 +70,8 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          deskripsi?: string | null
+          foto_url?: string | null
           harga?: number
           id?: string
           is_active?: boolean
