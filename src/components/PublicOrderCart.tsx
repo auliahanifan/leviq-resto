@@ -1,6 +1,7 @@
 "use client";
 
 import { useOptimistic, useState, useTransition } from "react";
+import { Minus, Plus, UtensilsCrossed } from "lucide-react";
 import {
   addItemToPublicCartAction,
   confirmPublicOrderAction,
@@ -107,21 +108,19 @@ export function PublicOrderCart({
   }
 
   if (menuItems.length === 0) {
-    return <p className="px-6 py-8 text-lg text-zinc-500">Belum ada menu aktif.</p>;
+    return <p className="px-6 py-8 text-lg text-muted">Belum ada menu aktif.</p>;
   }
 
   return (
     <div className="flex flex-1 flex-col pb-28">
-      <div className="flex gap-2 overflow-x-auto border-b border-zinc-200 px-4 py-3 dark:border-zinc-800">
+      <div className="flex gap-2 overflow-x-auto border-b border-border px-4 py-3">
         {kategoris.map((kategori) => (
           <button
             key={kategori}
             type="button"
             onClick={() => setActiveKategori(kategori)}
             className={`min-h-12 shrink-0 rounded-full px-4 text-base font-medium ${
-              kategori === activeKategori
-                ? "bg-foreground text-background"
-                : "bg-zinc-200 dark:bg-zinc-800"
+              kategori === activeKategori ? "bg-primary text-white" : "bg-surface"
             }`}
           >
             {kategori}
@@ -138,26 +137,26 @@ export function PublicOrderCart({
           return (
             <li
               key={item.id}
-              className="flex gap-3 rounded-xl border border-zinc-300 p-3 dark:border-zinc-700"
+              className="flex gap-3 rounded-2xl border border-border p-3"
             >
               {item.foto_url ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={item.foto_url}
                   alt={item.nama}
-                  className="h-20 w-20 shrink-0 rounded-lg object-cover"
+                  className="h-20 w-20 shrink-0 rounded-xl object-cover"
                 />
               ) : (
-                <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-lg bg-zinc-200 text-3xl dark:bg-zinc-800">
-                  🍽️
+                <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl bg-surface">
+                  <UtensilsCrossed className="h-8 w-8 text-muted" />
                 </div>
               )}
               <div className="flex flex-1 flex-col gap-1">
                 <p className="font-medium">{item.nama}</p>
                 {item.deskripsi && (
-                  <p className="text-sm text-zinc-500">{item.deskripsi}</p>
+                  <p className="text-sm text-muted">{item.deskripsi}</p>
                 )}
-                <p className="font-medium">{formatRupiah(item.harga)}</p>
+                <p className="font-medium text-primary">{formatRupiah(item.harga)}</p>
               </div>
               <div className="flex items-center">
                 {!cartItem || cartItem.qty === 0 ? (
@@ -169,9 +168,10 @@ export function PublicOrderCart({
                         addItemToPublicCartAction(table.id, item.id)
                       )
                     }
-                    className="min-h-12 min-w-12 rounded-lg bg-foreground px-4 text-lg font-bold text-background disabled:opacity-40"
+                    aria-label="Tambah"
+                    className="flex min-h-12 min-w-12 items-center justify-center rounded-full bg-primary px-4 text-white disabled:opacity-40"
                   >
-                    +
+                    <Plus className="h-5 w-5" />
                   </button>
                 ) : (
                   <div className="flex items-center gap-2">
@@ -183,9 +183,10 @@ export function PublicOrderCart({
                           decrementPublicCartItemAction(cartItem.id, table.id)
                         )
                       }
-                      className="min-h-12 min-w-12 rounded-lg bg-zinc-200 text-lg font-bold disabled:opacity-40 dark:bg-zinc-800"
+                      aria-label="Kurangi"
+                      className="flex min-h-12 min-w-12 items-center justify-center rounded-full bg-surface disabled:opacity-40"
                     >
-                      −
+                      <Minus className="h-4 w-4" />
                     </button>
                     <span className="w-6 text-center font-medium">{cartItem.qty}</span>
                     <button
@@ -196,9 +197,10 @@ export function PublicOrderCart({
                           incrementPublicCartItemAction(cartItem.id, table.id)
                         )
                       }
-                      className="min-h-12 min-w-12 rounded-lg bg-zinc-200 text-lg font-bold disabled:opacity-40 dark:bg-zinc-800"
+                      aria-label="Tambah"
+                      className="flex min-h-12 min-w-12 items-center justify-center rounded-full bg-primary text-white disabled:opacity-40"
                     >
-                      +
+                      <Plus className="h-4 w-4" />
                     </button>
                   </div>
                 )}
@@ -208,9 +210,9 @@ export function PublicOrderCart({
         })}
       </ul>
 
-      <div className="fixed inset-x-0 bottom-0 mx-auto flex w-full max-w-lg flex-col gap-3 border-t border-zinc-300 bg-background px-4 py-4 dark:border-zinc-700">
+      <div className="fixed inset-x-0 bottom-0 mx-auto flex w-full max-w-lg flex-col gap-3 border-t border-border bg-background px-4 py-4">
         {error && (
-          <p role="alert" className="text-base font-medium text-red-600">
+          <p role="alert" className="text-base font-medium text-danger">
             {error}
           </p>
         )}
