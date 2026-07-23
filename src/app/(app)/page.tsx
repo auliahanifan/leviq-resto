@@ -50,6 +50,12 @@ export default async function HomePage() {
                     {isTerisi ? "Terisi" : "Kosong"}
                   </span>
                 </Link>
+                <Link
+                  href={`/meja/${table.id}/qr`}
+                  className="text-sm font-medium underline-offset-4 hover:underline"
+                >
+                  Lihat/Cetak QR
+                </Link>
                 {!isTerisi && <DeleteTableButton id={table.id} />}
               </div>
             );

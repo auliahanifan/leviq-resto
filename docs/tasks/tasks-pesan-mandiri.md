@@ -21,11 +21,11 @@ Setiap task punya referensi FR-SO (Functional Requirement Self-Order) dari PRD b
 
 ## Fase 2 — QR Code per Meja (FR-SO1.1–1.4)
 
-- [ ] 2.1 Tambah tombol "Lihat/Cetak QR" di halaman Kelola Meja (existing, extend dari Fase 4 tasks.md) untuk tiap baris meja
-- [ ] 2.2 Generate QR code (client-side) dari URL `/order/[id-meja]` memakai id meja yang sudah ada — FR-SO1.1
-- [ ] 2.3 Tampilan QR bisa diunduh/print-friendly (misal buka di halaman/modal terpisah yang layak diprint) — FR-SO1.2
-- [ ] 2.4 Halaman `/order/[id-meja]` dengan id tidak valid/sudah dihapus menampilkan "Meja tidak ditemukan" (notFound) — FR-SO1.4
-- [ ] 2.5 Verifikasi: scan QR dari HP fisik mengarah ke halaman order meja yang benar; id acak/terhapus menampilkan halaman error
+- [x] 2.1 Tambah tombol "Lihat/Cetak QR" di halaman Kelola Meja (existing, extend dari Fase 4 tasks.md) untuk tiap baris meja
+- [x] 2.2 Generate QR code (client-side) dari URL `/order/[id-meja]` memakai id meja yang sudah ada — FR-SO1.1
+- [x] 2.3 Tampilan QR bisa diunduh/print-friendly (misal buka di halaman/modal terpisah yang layak diprint) — FR-SO1.2
+- [ ] 2.4 Halaman `/order/[id-meja]` dengan id tidak valid/sudah dihapus menampilkan "Meja tidak ditemukan" (notFound) — FR-SO1.4 (dibangun bareng Fase 3, lihat 3.x)
+- [ ] 2.5 Verifikasi: scan QR dari HP fisik mengarah ke halaman order meja yang benar; id acak/terhapus menampilkan halaman error (verifikasi browser bareng Fase 3; scan HP fisik ada di Fase 9)
 
 ## Fase 3 — Route Publik & Lihat Menu (FR-SO2.1–2.3, FR-SO1.3)
 
