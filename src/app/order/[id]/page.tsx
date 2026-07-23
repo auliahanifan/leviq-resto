@@ -20,12 +20,20 @@ export default async function PublicOrderPage({
   if (!table) notFound();
 
   if (table.status === "terisi") {
-    const { data: order } = await supabase
-      .from("orders")
-      .select("id, total, created_at")
-      .eq("table_id", id)
-      .eq("status", "confirmed")
-      .maybeSingle();
+    const [{ data: order }, { data: menuItems }] = await Promise.all([
+      supabase
+        .from("orders")
+        .select("id, total, created_at")
+        .eq("table_id", id)
+        .eq("status", "confirmed")
+        .maybeSingle(),
+      supabase
+        .from("menu_items")
+        .select("id, nama, harga, kategori, foto_url, deskripsi")
+        .eq("is_active", true)
+        .order("kategori")
+        .order("nama"),
+    ]);
 
     const { data: items } = order
       ? await supabase
@@ -34,13 +42,6 @@ export default async function PublicOrderPage({
           .eq("order_id", order.id)
           .order("created_at")
       : { data: [] };
-
-    const { data: menuItems } = await supabase
-      .from("menu_items")
-      .select("id, nama, harga, kategori, foto_url, deskripsi")
-      .eq("is_active", true)
-      .order("kategori")
-      .order("nama");
 
     return (
       <PublicOrderConfirmation
@@ -52,12 +53,15 @@ export default async function PublicOrderPage({
     );
   }
 
-  const { data: draftOrder } = await supabase
-    .from("orders")
-    .select("id")
-    .eq("table_id", id)
-    .eq("status", "draft")
-    .maybeSingle();
+  const [{ data: draftOrder }, { data: menuItems }] = await Promise.all([
+    supabase.from("orders").select("id").eq("table_id", id).eq("status", "draft").maybeSingle(),
+    supabase
+      .from("menu_items")
+      .select("id, nama, harga, kategori, foto_url, deskripsi")
+      .eq("is_active", true)
+      .order("kategori")
+      .order("nama"),
+  ]);
 
   const { data: cartItems } = draftOrder
     ? await supabase
@@ -66,13 +70,6 @@ export default async function PublicOrderPage({
         .eq("order_id", draftOrder.id)
         .order("created_at")
     : { data: [] };
-
-  const { data: menuItems } = await supabase
-    .from("menu_items")
-    .select("id, nama, harga, kategori, foto_url, deskripsi")
-    .eq("is_active", true)
-    .order("kategori")
-    .order("nama");
 
   return (
     <div className="flex flex-1 flex-col">
