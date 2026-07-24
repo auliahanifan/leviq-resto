@@ -74,11 +74,11 @@ Setiap task punya referensi FR-SO (Functional Requirement Self-Order) dari PRD b
 
 ## Fase 8 — Non-Functional & Polish
 
-- [ ] 8.1 Uji tampilan `/order/[id-meja]` di viewport HP (portrait, berbagai ukuran layar umum) — beda dari optimasi tablet sisi kasir
-- [ ] 8.2 Pastikan alur "scan QR → lihat menu → pesan" terasa cepat, minim loading blocking di koneksi HP/WiFi restoran
-- [ ] 8.3 Bahasa Indonesia & format Rupiah konsisten dengan sisi kasir
-- [ ] 8.4 Penanganan error dasar: koneksi terputus sementara, submit gagal (retry/pesan error jelas ke pelanggan)
-- [ ] 8.5 Review keamanan dasar: route publik tidak mengekspos data selain meja & menu (tidak ada leak data kasir/PIN/settings)
+- [x] 8.1 Uji tampilan `/order/[id-meja]` di viewport HP (portrait, berbagai ukuran layar umum) — beda dari optimasi tablet sisi kasir. Dicoba di 320×568, 375×812, 428×926 — layout, tab kategori, dan tombol tetap rapi di ketiga ukuran.
+- [x] 8.2 Pastikan alur "scan QR → lihat menu → pesan" terasa cepat, minim loading blocking di koneksi HP/WiFi restoran. Query tabel+menu sudah paralel (`Promise.all`); ditambah `src/app/order/[id]/loading.tsx` supaya ada feedback instan alih-alih layar putih kosong saat data masih di-fetch di koneksi lambat.
+- [x] 8.3 Bahasa Indonesia & format Rupiah konsisten dengan sisi kasir — diperiksa: semua teks UI publik Bahasa Indonesia, `formatRupiah` (locale `id-ID`) dipakai konsisten di semua tempat harga ditampilkan.
+- [x] 8.4 Penanganan error dasar: koneksi terputus sementara, submit gagal (retry/pesan error jelas ke pelanggan) — sudah ada: error server action (mis. gagal submit) tampil sebagai pesan inline dan tombol tetap bisa dicoba ulang; error tak tertangani (mis. koneksi putus) jatuh ke `src/app/error.tsx` global dengan pesan "Sepertinya ada masalah koneksi..." + tombol "Coba Lagi".
+- [x] 8.5 Review keamanan dasar: route publik tidak mengekspos data selain meja & menu (tidak ada leak data kasir/PIN/settings) — diperiksa `src/app/order/[id]/page.tsx` & `src/lib/public-order-actions.ts`: semua query pakai kolom eksplisit (bukan `select("*")`), tidak menyentuh tabel `settings`/`pin_hash`; `src/proxy.ts` mengonfirmasi `/order` adalah satu-satunya prefix publik yang sengaja dibuka, rute kasir lain tetap di-gate PIN.
 
 ## Fase 9 — Testing & Go-Live
 
