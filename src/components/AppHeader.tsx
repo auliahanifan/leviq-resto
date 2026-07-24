@@ -16,6 +16,12 @@ export function AppHeader() {
           Kelola Menu
         </Link>
         <Link
+          href="/rekap"
+          className="text-base font-medium text-foreground underline-offset-4 hover:underline"
+        >
+          Rekap
+        </Link>
+        <Link
           href="/tutup-kasir"
           className="text-base font-medium text-foreground underline-offset-4 hover:underline"
         >
