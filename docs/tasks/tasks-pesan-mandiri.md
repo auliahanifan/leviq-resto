@@ -64,13 +64,13 @@ Setiap task punya referensi FR-SO (Functional Requirement Self-Order) dari PRD b
 
 ## Fase 7 — Manajemen Menu: Foto & Deskripsi (FR-SO6.1–6.3, perluasan Fase 3 tasks.md)
 
-- [ ] 7.1 Extend form tambah/edit item menu (existing "Kelola Menu") dengan field upload foto (opsional) — FR-SO6.1
-- [ ] 7.2 Extend form dengan field deskripsi singkat (opsional, textarea) — FR-SO6.2
-- [ ] 7.3 Upload foto ke bucket Supabase Storage dari server action, simpan `foto_url` hasil upload ke `menu_items`
-- [ ] 7.4 Validasi ukuran/format file wajar (misal maks 2MB, jpg/png/webp) di sisi form
-- [ ] 7.5 Tampilkan thumbnail foto di list "Kelola Menu" existing agar kasir bisa cek hasil upload
-- [ ] 7.6 Pastikan item tanpa foto/deskripsi tetap valid disimpan & tampil normal — FR-SO6.3
-- [ ] 7.7 Verifikasi: upload foto baru, edit ganti foto, hapus/skip foto — semua tidak merusak data menu existing
+- [x] 7.1 Extend form tambah/edit item menu (existing "Kelola Menu") dengan field upload foto (opsional) — FR-SO6.1
+- [x] 7.2 Extend form dengan field deskripsi singkat (opsional, textarea) — FR-SO6.2
+- [x] 7.3 Upload foto ke bucket Supabase Storage dari server action, simpan `foto_url` hasil upload ke `menu_items` (`uploadMenuFoto` di `src/lib/menu-actions.ts`, nama file `crypto.randomUUID()`)
+- [x] 7.4 Validasi ukuran/format file wajar (misal maks 2MB, jpg/png/webp) di sisi form (dicek di server action; juga naikkan `serverActions.bodySizeLimit` Next.js ke `3mb` di `next.config.ts` — default 1MB Next.js akan memblok upload sebelum validasi 2MB kita sempat jalan)
+- [x] 7.5 Tampilkan thumbnail foto di list "Kelola Menu" existing agar kasir bisa cek hasil upload (placeholder ikon jika tanpa foto)
+- [x] 7.6 Pastikan item tanpa foto/deskripsi tetap valid disimpan & tampil normal — FR-SO6.3
+- [x] 7.7 Verifikasi: upload foto baru, edit ganti foto, hapus/skip foto — semua tidak merusak data menu existing. Dicoba di browser dev (item test "Es Krim Vanilla"): tambah item dengan foto+deskripsi → tampil dengan thumbnail; edit → centang "Hapus foto ini" → foto hilang, deskripsi tetap; upload file 2.5MB → error "Ukuran foto maksimal 2MB." (tanpa foto ter-upload); upload file .txt → error "Format foto harus JPG, PNG, atau WebP."; item lama tanpa foto/deskripsi (mis. Ayam Bakar) tetap tampil normal dengan placeholder. Item test dihapus lagi setelahnya.
 
 ## Fase 8 — Non-Functional & Polish
 

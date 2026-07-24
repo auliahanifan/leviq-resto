@@ -13,6 +13,35 @@ function parseHarga(value: FormDataEntryValue | null): number | null {
   return harga;
 }
 
+const MAX_FOTO_SIZE = 2 * 1024 * 1024;
+const FOTO_EXT_BY_TYPE: Record<string, string> = {
+  "image/jpeg": "jpg",
+  "image/png": "png",
+  "image/webp": "webp",
+};
+
+async function uploadMenuFoto(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  file: File
+): Promise<{ url: string } | { error: string }> {
+  const ext = FOTO_EXT_BY_TYPE[file.type];
+  if (!ext) {
+    return { error: "Format foto harus JPG, PNG, atau WebP." };
+  }
+  if (file.size > MAX_FOTO_SIZE) {
+    return { error: "Ukuran foto maksimal 2MB." };
+  }
+
+  const path = `${crypto.randomUUID()}.${ext}`;
+  const { error } = await supabase.storage.from("menu-photos").upload(path, file);
+  if (error) {
+    return { error: "Gagal mengunggah foto." };
+  }
+
+  const { data } = supabase.storage.from("menu-photos").getPublicUrl(path);
+  return { url: data.publicUrl };
+}
+
 export async function createMenuItemAction(
   _prevState: MenuFormState,
   formData: FormData
@@ -22,6 +51,7 @@ export async function createMenuItemAction(
   const nama = String(formData.get("nama") ?? "").trim();
   const harga = parseHarga(formData.get("harga"));
   const kategori = String(formData.get("kategori") ?? "").trim() || null;
+  const deskripsi = String(formData.get("deskripsi") ?? "").trim() || null;
 
   if (!nama) {
     return { error: "Nama item wajib diisi." };
@@ -31,7 +61,18 @@ export async function createMenuItemAction(
   }
 
   const supabase = await createClient();
-  const { error } = await supabase.from("menu_items").insert({ nama, harga, kategori });
+
+  let foto_url: string | null = null;
+  const foto = formData.get("foto");
+  if (foto instanceof File && foto.size > 0) {
+    const uploaded = await uploadMenuFoto(supabase, foto);
+    if ("error" in uploaded) return { error: uploaded.error };
+    foto_url = uploaded.url;
+  }
+
+  const { error } = await supabase
+    .from("menu_items")
+    .insert({ nama, harga, kategori, deskripsi, foto_url });
 
   if (error) {
     return { error: "Gagal menambah item menu." };
@@ -51,6 +92,8 @@ export async function updateMenuItemAction(
   const nama = String(formData.get("nama") ?? "").trim();
   const harga = parseHarga(formData.get("harga"));
   const kategori = String(formData.get("kategori") ?? "").trim() || null;
+  const deskripsi = String(formData.get("deskripsi") ?? "").trim() || null;
+  const hapusFoto = formData.get("hapus_foto") === "on";
 
   if (!id) {
     return { error: "Item menu tidak ditemukan." };
@@ -63,9 +106,20 @@ export async function updateMenuItemAction(
   }
 
   const supabase = await createClient();
+
+  let foto_url: string | null | undefined;
+  const foto = formData.get("foto");
+  if (foto instanceof File && foto.size > 0) {
+    const uploaded = await uploadMenuFoto(supabase, foto);
+    if ("error" in uploaded) return { error: uploaded.error };
+    foto_url = uploaded.url;
+  } else if (hapusFoto) {
+    foto_url = null;
+  }
+
   const { error } = await supabase
     .from("menu_items")
-    .update({ nama, harga, kategori })
+    .update({ nama, harga, kategori, deskripsi, ...(foto_url !== undefined ? { foto_url } : {}) })
     .eq("id", id);
 
   if (error) {
