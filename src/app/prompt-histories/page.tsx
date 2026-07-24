@@ -17,6 +17,13 @@ const DAYS: Day[] = [
     promptCount: 15,
     sessionCount: 6,
   },
+  {
+    slug: "day-2",
+    title: "Hari 2",
+    date: "23–24 Juli 2026",
+    promptCount: 26,
+    sessionCount: 12,
+  },
 ];
 
 export default function PromptHistoriesPage() {
